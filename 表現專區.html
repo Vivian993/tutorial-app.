@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⭐ 終極小孩任務與高效激勵表</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#2D3748;--soft:#718096;--coral:#FF6B6B;--grass:#4CAF7D;--sun:#FFB800;--r:16px;--shadow:0 4px 20px rgba(0,0,0,.10);}
+html{font-size:118%;}
+body{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;background:linear-gradient(160deg,#E8F4FD 0%,#FFF9E6 100%);min-height:100vh;color:var(--ink);padding-bottom:60px;}
+.app-header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:12px 20px 10px;text-align:center;box-shadow:0 3px 15px rgba(102,126,234,.4);position:sticky;top:0;z-index:200;}
+.app-header h1{font-size:1.4rem;font-weight:900;letter-spacing:.06em;margin-bottom:1px;}
+.app-header p{font-size:.72rem;opacity:.85;}
+.date-bar{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;background:rgba(255,255,255,.8);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,.07);font-size:.76rem;color:var(--soft);}
+.backup-bar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:8px 13px;background:linear-gradient(90deg,#f0f4ff,#fdf6ff);border-bottom:1px solid #e0e7ff;font-size:.74rem;}
+.backup-bar-label{color:var(--soft);font-weight:700;}
+.bk-btn{border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-size:.74rem;font-weight:700;padding:6px 11px;transition:opacity .2s;}
+.bk-btn:hover{opacity:.82;}
+.bk-btn.export{background:#667eea;color:#fff;}.bk-btn.import{background:#27ae60;color:#fff;}.bk-btn.danger{background:#e74c3c;color:#fff;}
+.bk-btn.purple{background:#764ba2;color:#fff;}.bk-btn.orange{background:#f39c12;color:#fff;}
+.bk-time{margin-left:auto;color:#a0aec0;font-size:.68rem;font-style:italic;}
+#fileInput{display:none;}
+
+.utility-panel{background:#fff;margin:10px 12px 0;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;}
+.cal-row{display:flex;align-items:center;gap:9px;}
+.cal-btn{flex:1;display:flex;align-items:center;gap:8px;border:1.5px solid #cbd5e0;background:#fafbff;padding:8px 12px;border-radius:10px;cursor:pointer;font-family:inherit;text-align:left;}
+.cal-btn:hover{background:#edf2f7;}
+.cal-btn .cd{font-size:1.4rem;}
+.cal-btn .ct{font-size:.82rem;font-weight:700;color:var(--ink);}
+.cal-btn .cs{font-size:.66rem;color:var(--soft);}
+.yell-btn{background:linear-gradient(135deg,#e53e3e,#dd6b20);color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:.78rem;font-weight:900;cursor:pointer;box-shadow:0 2px 8px rgba(229,62,62,.3);width:100%;text-align:center;}
+.yell-btn:hover{opacity:.9;}
+.pts-adj-btn{background:#F7F8FC;border:1.5px solid #E2E8F0;color:var(--ink);padding:8px 12px;border-radius:8px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;width:100%;}
+.pts-adj-btn:hover{background:#edf2f7;}
+
+.tab-bar{display:flex;background:#fff;border-bottom:2px solid #EEF0F4;position:sticky;top:58px;z-index:190;overflow-x:auto;}
+.tab-btn{flex:1;min-width:90px;padding:10px 6px 8px;border:none;background:none;cursor:pointer;font-family:inherit;font-weight:700;color:var(--soft);border-bottom:3px solid transparent;transition:all .2s;}
+.tab-btn.active{color:#667eea;border-bottom-color:#667eea;}
+.tab-kid-name{display:block;font-size:.78rem;font-weight:900;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tab-pts{display:inline-block;min-width:32px;height:21px;border-radius:10px;font-size:.76rem;font-weight:900;line-height:21px;text-align:center;padding:0 7px;margin-top:3px;background:#EEF0F4;color:var(--soft);transition:all .3s;}
+.tab-pts.pos{background:#E8F8EF;color:#27ae60;}.tab-pts.m10{background:linear-gradient(135deg,#f6d365,#fda085);color:#fff;}.tab-pts.m20{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;animation:pulse 1s infinite;}.tab-pts.m50{background:linear-gradient(135deg,#4facfe,#00f2fe);color:#fff;animation:pulse 1s infinite;}.tab-pts.neg{background:#FFF0F0;color:var(--coral);}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+.inner-nav{display:flex;gap:0;background:#F7F8FC;border-radius:12px;padding:4px;margin-bottom:12px;overflow-x:auto;}
+.inner-tab{flex:1;min-width:55px;padding:7px 4px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:.72rem;font-weight:700;color:var(--soft);border-radius:9px;transition:all .2s;white-space:nowrap;}
+.inner-tab.active{background:#fff;color:#667eea;box-shadow:0 2px 8px rgba(0,0,0,.09);}
+.page{display:none;padding:12px 12px 90px;max-width:720px;margin:0 auto;}
+.page.active{display:block;}
+.pts-summary{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:var(--r);padding:16px 20px;color:#fff;margin-bottom:12px;box-shadow:0 4px 20px rgba(102,126,234,.35);}
+.kid-header-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.kid-name-lg{font-size:1.7rem;font-weight:900;display:flex;align-items:center;gap:6px;line-height:1.15;}
+.kid-pts-lg{font-size:2.5rem;font-weight:900;line-height:1;text-align:right;white-space:nowrap;}
+.util-chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.util-chip{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:14px;padding:7px 13px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.util-chip:hover{background:rgba(255,255,255,.32);}
+.quick-adj-row{display:flex;gap:6px;flex-wrap:wrap;}
+.quick-adj-btn{flex:1;min-width:42px;padding:9px 0;border-radius:10px;border:none;font-weight:900;font-size:.92rem;cursor:pointer;font-family:inherit;}
+.quick-adj-btn.plus{background:#E8F8EF;color:#1e824c;}
+.quick-adj-btn.minus{background:#FFF0F0;color:#c0392b;}
+.pts-name-big{font-size:1.4rem;font-weight:900;margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pts-number{font-size:3.4rem;font-weight:900;line-height:1;margin-bottom:6px;}
+.pts-row{display:flex;gap:12px;flex-wrap:wrap;}
+.pts-item{font-size:.76rem;opacity:.9;}.pts-item strong{font-weight:700;}
+
+.milestone-banner{border-radius:var(--r);padding:10px 13px;margin-bottom:11px;display:flex;align-items:center;gap:9px;cursor:pointer;font-weight:700;font-size:.86rem;transition:transform .15s;box-shadow:var(--shadow);}
+.milestone-banner:hover{transform:translateY(-2px);}
+.milestone-banner.m10{background:linear-gradient(135deg,#f6d365,#fda085);color:#5d3a00;}
+.milestone-banner.m20{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;}
+.milestone-banner.m50{background:linear-gradient(135deg,#4facfe,#00f2fe);color:#fff;}
+.milestone-banner.streak{background:linear-gradient(135deg,#a8edea,#fed6e3);color:#5d3a6b;}
+.m-icon{font-size:1.5rem;}.m-text{flex:1;}.m-sub{font-size:.68rem;font-weight:500;opacity:.9;margin-top:2px;}
+.m-btn{background:rgba(255,255,255,.25);border:none;color:inherit;font-family:inherit;font-weight:700;font-size:.72rem;padding:5px 9px;border-radius:15px;cursor:pointer;white-space:nowrap;margin-left:3px;}
+.milestone-banner.m20 .m-btn,.milestone-banner.m50 .m-btn{color:#fff;}
+
+.section-card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden;}
+.section-head{padding:10px 13px;display:flex;align-items:center;gap:7px;border-bottom:1px solid #F0F0F0;font-weight:700;font-size:.86rem;}
+.s-badge{margin-left:auto;font-size:.64rem;padding:2px 7px;border-radius:9px;font-weight:700;}
+.bg{background:#E8F8EF;color:#27ae60;}.br{background:#FFF0F0;color:#e74c3c;}.bb{background:#EBF4FF;color:#3182ce;}.by{background:#FFF8E1;color:#f39c12;}
+.task-row{display:flex;align-items:center;padding:9px 13px;border-bottom:1px solid #F7F7F7;gap:9px;transition:background .15s;}
+.task-row:last-child{border-bottom:none;}.task-row:hover{background:#FAFBFF;}
+.task-label{flex:1;font-size:.87rem;font-weight:500;line-height:1.35;}
+.task-pts-lbl{font-size:.7rem;font-weight:700;min-width:30px;text-align:right;color:var(--soft);}
+.check-wrap{position:relative;cursor:pointer;flex-shrink:0;}
+.check-wrap input{position:absolute;opacity:0;width:0;height:0;}
+.checkmark{width:28px;height:28px;border-radius:8px;border:2.5px solid #CBD5E0;display:flex;align-items:center;justify-content:center;transition:all .2s;background:#fff;user-select:none;}
+.check-wrap input:checked+.checkmark{background:#4CAF7D;border-color:#4CAF7D;box-shadow:0 2px 8px rgba(76,175,125,.4);}
+.check-wrap input:checked+.checkmark::after{content:'✓';color:#fff;font-weight:900;font-size:.93rem;}
+.pen-wrap input:checked+.checkmark{background:var(--coral);border-color:var(--coral);box-shadow:0 2px 8px rgba(255,107,107,.4);}
+.pen-wrap input:checked+.checkmark::after{content:'✗';color:#fff;font-weight:900;font-size:.93rem;}
+.add-row{display:flex;gap:7px;padding:8px 12px;border-top:1px dashed #E2E8F0;}
+.add-inp{flex:1;border:1.5px solid #E2E8F0;border-radius:8px;padding:6px 9px;font-family:inherit;font-size:.82rem;color:var(--ink);outline:none;background:#FAFBFF;transition:border-color .2s;}
+.add-inp:focus{border-color:#667eea;}
+.add-btn{background:#667eea;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-family:inherit;font-size:.76rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.add-btn:hover{opacity:.85;}.add-btn.red{background:#e74c3c;}
+.del-btn{background:none;border:none;cursor:pointer;color:#CBD5E0;font-size:.86rem;padding:3px 4px;border-radius:5px;transition:color .2s;}
+.del-btn:hover{color:var(--coral);}
+.streak-info{background:#FFF0F0;border:2px solid #FF6B6B;border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:.78rem;color:#c53030;font-weight:700;}
+.hist-item{padding:8px 12px;border-bottom:1px solid #F7F7F7;display:flex;align-items:center;gap:9px;font-size:.79rem;}
+.h-pts{font-weight:900;font-size:.84rem;min-width:32px;}.h-pts.pos{color:#27ae60;}.h-pts.neg{color:#e74c3c;}
+.h-meta{color:var(--soft);font-size:.68rem;margin-top:1px;}
+
+.pcard-item{background:linear-gradient(135deg,#FF6B6B,#ee0979);border-radius:13px;padding:13px 15px;margin:8px 12px;color:#fff;display:flex;align-items:center;gap:10px;box-shadow:0 4px 15px rgba(238,9,121,.3);}
+.pcard-item .pi-icon{font-size:1.6rem;}.pcard-item .pi-body{flex:1;}.pcard-item .pi-title{font-size:.95rem;font-weight:900;margin-bottom:2px;}.pcard-item .pi-sub{font-size:.68rem;opacity:.85;}
+.pcard-done-btn{background:rgba(255,255,255,.25);border:none;color:#fff;font-family:inherit;font-weight:700;font-size:.75rem;padding:6px 11px;border-radius:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.pcard-done-btn:hover{background:rgba(255,255,255,.4);}
+.empty-pq,.empty-chest{text-align:center;padding:22px;color:var(--soft);font-size:.84rem;}.empty-pq div,.empty-chest div{font-size:2.2rem;margin-bottom:7px;}
+.treasure-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;padding:10px 12px;}
+.ti{border-radius:14px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.14);transition:transform .2s;}.ti:hover{transform:translateY(-3px);}.ti-body{padding:11px 12px;}.ti-type{font-size:.52rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px;}.ti-name{font-size:.86rem;font-weight:900;margin-bottom:3px;}.ti-pts{font-size:.66rem;font-weight:700;margin-bottom:5px;opacity:.85;}.ti-desc{font-size:.68rem;line-height:1.4;opacity:.9;}
+.ti.luck-ti{background:linear-gradient(135deg,#f6d365,#fda085);color:#5d3a00;}
+.ti.quiz-ti{background:linear-gradient(135deg,#a1c4fd,#c2e9fb);color:#1a3a5c;}
+.ti-use{display:block;width:100%;padding:7px;border:none;background:rgba(0,0,0,.15);font-family:inherit;font-size:.72rem;font-weight:700;cursor:pointer;color:inherit;}
+.ti-use:hover{background:rgba(0,0,0,.27);}
+
+.pkcard{border-radius:20px;width:100%;max-width:300px;margin:0 auto 12px;position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.3);animation:cardSlide .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes cardSlide{from{transform:translateY(30px) scale(.88);opacity:0;}to{transform:none;opacity:1;}}
+.pk-shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.25) 50%,transparent 65%);background-size:200% 100%;animation:shine 3.5s linear infinite;}
+@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.pk-top{padding:14px 16px 8px;position:relative;z-index:1;}.pk-type{font-size:.56rem;font-weight:900;letter-spacing:.16em;opacity:.8;margin-bottom:3px;}.pk-title{font-size:1.25rem;font-weight:900;line-height:1.15;margin-bottom:5px;text-shadow:0 1px 3px rgba(0,0,0,.2);}.pk-pts-badge{display:inline-block;padding:3px 12px;border-radius:18px;font-size:.8rem;font-weight:900;background:rgba(255,255,255,.28);margin-bottom:9px;}.pk-art{font-size:3rem;text-align:center;padding:8px 0;line-height:1;}.pk-divider{height:1.5px;background:rgba(255,255,255,.25);margin:0 16px;}.pk-desc{padding:10px 16px;font-size:.77rem;line-height:1.58;opacity:.93;font-weight:500;}.pk-footer{padding:5px 16px 13px;font-size:.58rem;opacity:.6;letter-spacing:.1em;font-weight:700;}
+.pkcard.luck{background:linear-gradient(145deg,#f6d365 0%,#fda085 55%,#f093fb 100%);}
+.pkcard.punish{background:linear-gradient(145deg,#FF416C 0%,#FF4B2B 50%,#8B0000 100%);}
+.pkcard.quiz{background:linear-gradient(145deg,#4facfe 0%,#00f2fe 60%,#43e97b 100%);}
+.pkcard *{color:#fff!important;}
+
+.quiz-q{background:#F7F8FC;border-radius:11px;padding:13px 14px;margin-bottom:10px;font-size:.9rem;font-weight:700;line-height:1.5;color:var(--ink);text-align:left;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px;}
+.quiz-opt{padding:9px 11px;border-radius:10px;border:2px solid #E2E8F0;background:#fff;font-family:inherit;font-size:.82rem;cursor:pointer;font-weight:600;text-align:left;}
+.quiz-opt:hover:not(:disabled){border-color:#667eea;background:#F0F3FF;}
+.quiz-opt.correct{border-color:#27ae60!important;background:#E8F8EF!important;color:#27ae60!important;}
+.quiz-opt.wrong{border-color:#e74c3c!important;background:#FFF0F0!important;color:#e74c3c!important;}
+.quiz-opt.reveal{border-color:#27ae60!important;background:#E8F8EF!important;color:#27ae60!important;}
+.quiz-analysis{background:#F0F3FF;border-radius:10px;padding:10px 13px;font-size:.78rem;color:#444;line-height:1.65;margin-top:6px;border-left:3px solid #667eea;text-align:left;}
+.quiz-progress{display:flex;justify-content:space-between;align-items:center;font-size:.74rem;color:var(--soft);margin-bottom:9px;}
+
+.full-yell-overlay{position:fixed;inset:0;background:radial-gradient(circle,#ff4d4d,#990000);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;animation:flashRed .5s infinite alternate;padding:20px;}
+@keyframes flashRed{from{background:radial-gradient(circle,#ff4d4d,#b30000);}to{background:radial-gradient(circle,#ff1a1a,#660000);}}
+.yell-num{font-size:8rem;font-weight:900;text-shadow:0 4px 20px rgba(0,0,0,.5);line-height:1;margin-bottom:10px;}
+.yell-txt{font-size:1.5rem;font-weight:900;margin-bottom:8px;letter-spacing:1px;text-align:center;}
+.yell-warn{font-size:.9rem;font-weight:700;margin-bottom:26px;text-align:center;background:rgba(0,0,0,.25);padding:6px 14px;border-radius:20px;}
+.yell-cancel-btn{background:#fff;color:#cc0000;border:none;padding:15px 40px;border-radius:50px;font-size:1.4rem;font-weight:900;cursor:pointer;box-shadow:0 6px 25px rgba(0,0,0,.3);transition:transform .1s;}
+.yell-cancel-btn:hover{transform:scale(1.05);}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:14px;}
+.modal{background:#fff;border-radius:22px;padding:20px 17px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:92vh;overflow-y:auto;}
+.modal .me{font-size:2.6rem;margin-bottom:8px;}.modal h2{font-size:1.1rem;font-weight:900;margin-bottom:6px;}.modal p{font-size:.84rem;color:var(--soft);margin-bottom:13px;line-height:1.62;}
+.gacha-ball{width:95px;height:95px;border-radius:50%;background:linear-gradient(135deg,#f093fb,#f5576c);margin:0 auto 13px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;box-shadow:0 8px 30px rgba(240,147,251,.5);cursor:pointer;user-select:none;}
+.gacha-ball.blue{background:linear-gradient(135deg,#4facfe,#00f2fe);box-shadow:0 8px 30px rgba(79,172,254,.5);}
+.gacha-ball.pink{background:linear-gradient(135deg,#a8edea,#fed6e3);box-shadow:0 8px 30px rgba(253,182,227,.6);}
+.gacha-ball.spinning{animation:spin .6s ease-in-out infinite;}
+@keyframes spin{0%{transform:rotate(0) scale(1);}50%{transform:rotate(180deg) scale(1.15);}100%{transform:rotate(360deg) scale(1);}}
+.prize-reveal{font-size:2rem;font-weight:900;color:var(--sun);text-shadow:0 2px 10px rgba(255,184,0,.5);margin:8px 0;animation:pop .4s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
+.mbtn{display:block;width:100%;padding:11px;border-radius:11px;border:none;font-family:inherit;font-size:.86rem;font-weight:700;cursor:pointer;margin-top:7px;text-align:center;}
+.mbtn.primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;}.mbtn.danger{background:linear-gradient(135deg,#FF6B6B,#ee0979);color:#fff;}.mbtn.secondary{background:#F7F7F7;color:var(--soft);}.mbtn.gold{background:linear-gradient(135deg,#f6d365,#fda085);color:#5d3a00;}
+.reset-bar{display:flex;justify-content:flex-end;margin-bottom:10px;}
+.reset-btn{background:none;border:1.5px solid #E2E8F0;border-radius:8px;padding:5px 12px;font-family:inherit;font-size:.72rem;color:var(--soft);cursor:pointer;font-weight:600;}
+
+.setup-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;padding:28px 18px;text-align:center;}
+.setup-page h2{font-size:1.4rem;font-weight:900;margin-bottom:7px;}.setup-page p{color:var(--soft);font-size:.86rem;margin-bottom:20px;}
+.name-inputs{display:flex;flex-direction:column;gap:10px;width:100%;max-width:290px;}
+.name-field{background:#fff;border:2px solid #E2E8F0;border-radius:12px;padding:11px 14px;font-family:inherit;font-size:1rem;color:var(--ink);outline:none;width:100%;}
+.start-btn{margin-top:12px;width:100%;max-width:290px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:12px;padding:13px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;}
+.star-bg{position:fixed;pointer-events:none;inset:0;overflow:hidden;z-index:-1;}.star{position:absolute;font-size:1.1rem;opacity:.06;animation:float linear infinite;}
+@keyframes float{from{transform:translateY(100vh) rotate(0);}to{transform:none;transform:translateY(-10vh) rotate(360deg);}}
+.lvl-btn{padding:7px 14px;border-radius:20px;border:2px solid #E2E8F0;background:#fff;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--soft);width:100%;text-align:left;margin-bottom:6px;}
+.lvl-btn.active{border-color:#667eea;background:#667eea;color:#fff;}
+.mgr-list-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0;text-align:left;}
+.kidcount-row{display:flex;gap:7px;margin-bottom:14px;}
+.kc-btn{flex:1;padding:9px 0;border-radius:10px;border:2px solid #E2E8F0;background:#fff;font-family:inherit;font-weight:900;font-size:.95rem;color:var(--soft);cursor:pointer;}
+.kc-btn.active{border-color:#667eea;background:#667eea;color:#fff;}
+/* calendar */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:10px 0;}
+.cal-dow{font-size:.66rem;color:var(--soft);text-align:center;font-weight:700;padding:2px 0;}
+.cal-day{aspect-ratio:1;border-radius:8px;border:none;background:#F7F8FC;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;position:relative;color:var(--ink);}
+.cal-day:hover{background:#e2e8f0;}
+.cal-day.today{background:#667eea;color:#fff;}
+.cal-day.has-note::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#f5576c;}
+.cal-day.today.has-note::after{background:#fff;}
+.cal-day.empty{background:transparent;cursor:default;}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-weight:900;}
+.cal-nav button{background:#F7F8FC;border:none;border-radius:8px;padding:5px 10px;font-family:inherit;cursor:pointer;font-weight:900;}
+.hw-textarea{width:100%;min-height:90px;border:1.5px solid #E2E8F0;border-radius:10px;padding:9px;font-family:inherit;font-size:.82rem;resize:vertical;outline:none;}
+.hw-textarea:focus{border-color:#667eea;}
+.qsave-row{display:flex;gap:8px;}
+.qsave-row .mbtn{margin-top:0;}
+</style>
+</head>
+<body>
+
+<div class="star-bg" id="starBg"></div>
+
+<div id="fullYellOverlay" class="full-yell-overlay" style="display:none;">
+  <div class="yell-txt">📢 正在呼喊小孩中！請在 10 秒內回覆！</div>
+  <div class="yell-num" id="yellCountdown">10</div>
+  <div class="yell-warn">⏱️ 時間內趕來按下取消不扣分；鈴聲響起才取消將扣 2 點！</div>
+  <button class="yell-cancel-btn" onclick="cancelYellAlert()">我聽到了/取消警報</button>
+</div>
+
+<div id="setupScreen" class="setup-page">
+  <div style="font-size:3.2rem;margin-bottom:11px">⭐</div>
+  <h2>終極小孩任務與高效激勵表</h2>
+  <p>選擇參加人數並設定名字，即刻開啟好習慣養成計畫</p>
+  <div class="kidcount-row" id="kidCountRow"></div>
+  <div class="name-inputs" id="nameInputsWrap"></div>
+  <button class="start-btn" onclick="startApp()">開始建立新習慣 🚀</button>
+</div>
+
+<div id="mainApp" style="display:none">
+  <header class="app-header">
+    <h1>⭐ 小孩全能激勵表</h1>
+    <p id="headerDate"></p>
+  </header>
+  <div class="date-bar">
+    <span id="dateDisplay"></span>
+    <span style="font-weight:700;color:#2b6cb0;">🔒 離線單機安全版</span>
+  </div>
+
+  <div class="utility-panel">
+    <button class="yell-btn" onclick="triggerYellAlert()">📢 啟動「呼喊小孩」10 秒不回覆震天警報器</button>
+  </div>
+
+  <div class="backup-bar">
+    <span class="backup-bar-label">🔧 管理：</span>
+    <button class="bk-btn export" onclick="exportData()">⬇️ 備份導出</button>
+    <button class="bk-btn import" onclick="document.getElementById('fileInput').click()">⬆️ 還原匯入</button>
+    <button class="bk-btn orange" onclick="openParentControl()">⚙️ 卡片與題庫中心</button>
+    <button class="bk-btn danger" onclick="confirmReset()">🗑️ 刪除</button>
+    <input type="file" id="fileInput" accept=".json" onchange="importData(event)">
+    <span class="bk-time" id="lastSaveTime"></span>
+  </div>
+
+  <div class="tab-bar" id="kidTabs"></div>
+  <div id="kidPages"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="handleOvClick(event)">
+  <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
+</div>
+
+<script>
+/* ════ 音效引擎 ════ */
+const AudioEngine = {
+  ctx: null,
+  init() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
+  click(){ this.init(); const t=this.ctx.currentTime; this.osc(700,'square',t,0.05); },
+  playDone() { this.init(); const t = this.ctx.currentTime; this.osc(523.25,'sine',t,0.1); this.osc(659.25,'sine',t+0.1,0.1); this.osc(783.99,'sine',t+0.2,0.2); },
+  playMilestone() { this.init(); const t = this.ctx.currentTime; this.osc(392,'square',t,0.15); this.osc(523.25,'square',t+0.15,0.15); this.osc(659.25,'square',t+0.3,0.15); this.osc(1046.5,'square',t+0.45,0.4); },
+  playAlarm() { this.init(); let t = this.ctx.currentTime; for(let i=0;i<3;i++){ this.osc(880,'sawtooth',t,0.15); t+=0.3; } },
+  sirenInterval: null,
+  startSiren() {
+    this.init(); if(this.sirenInterval) return;
+    let high = true;
+    this.sirenInterval = setInterval(() => { this.osc(high?1200:500,'sawtooth',this.ctx.currentTime,0.28,0.35); high=!high; }, 220);
+  },
+  stopSiren() { if(this.sirenInterval) { clearInterval(this.sirenInterval); this.sirenInterval = null; } },
+  osc(freq, type, start, dur, vol) {
+    try {
+      const o = this.ctx.createOscillator(); const g = this.ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, start);
+      g.gain.setValueAtTime(vol||0.2, start); g.gain.exponentialRampToValueAtTime(0.00001, start + dur);
+      o.connect(g); g.connect(this.ctx.destination); o.start(start); o.stop(start + dur);
+    } catch(e) {}
+  }
+};
+function bClick(){ try{ AudioEngine.click(); }catch(e){} }
+document.addEventListener('click', function(e){ if(e.target.closest('button')) bClick(); }, true);
+
+/* ════ 100 題智慧卡題庫（依年級難度：1=中低年級 2=高年級 3=國中 4=高中）════ */
+const QBANK = [
+{id:'q1',type:'注音',level:1,q:'「ㄏㄨㄢ」喜：高興、快樂的感覺',opts:['換','歡','幻','患'],ans:1,analysis:'歡喜的「歡」注音為ㄏㄨㄢ。'},
+{id:'q2',type:'注音',level:1,q:'「ㄊㄨㄛ」延：把事情拖到後面',opts:['托','脫','妥','拖'],ans:3,analysis:'拖延的「拖」注音為ㄊㄨㄛ。'},
+{id:'q3',type:'注音',level:1,q:'「ㄐㄧㄥ」訝：非常驚訝',opts:['景','驚','晶','經'],ans:1,analysis:'驚訝的「驚」注音為ㄐㄧㄥ。'},
+{id:'q4',type:'注音',level:1,q:'「ㄈㄣˋ」怒：非常生氣',opts:['奮','憤','粉','分'],ans:1,analysis:'憤怒的「憤」注音為ㄈㄣˋ。'},
+{id:'q5',type:'注音',level:1,q:'「ㄒㄧㄤ」信：相信',opts:['想','相','箱','鑲'],ans:1,analysis:'相信的「相」注音為ㄒㄧㄤ。'},
+{id:'q6',type:'注音',level:2,q:'「ㄑㄧㄥ」楚：清晰明白',opts:['青','清','情','晴'],ans:1,analysis:'清楚的「清」注音為ㄑㄧㄥ。'},
+{id:'q7',type:'注音',level:2,q:'「ㄉㄢ」心：擔憂',opts:['單','膽','擔','但'],ans:2,analysis:'擔心的「擔」注音為ㄉㄢ。'},
+{id:'q8',type:'注音',level:1,q:'「ㄒㄧㄝˋ」謝：表示感謝',opts:['卸','謝','械','懈'],ans:1,analysis:'謝謝的「謝」注音為ㄒㄧㄝˋ。'},
+{id:'q9',type:'注音',level:2,q:'「ㄗㄨㄣ」重：尊敬看重',opts:['遵','尊','樽','鱒'],ans:1,analysis:'尊重的「尊」注音為ㄗㄨㄣ。'},
+{id:'q10',type:'注音',level:1,q:'「ㄏㄨㄟˊ」憶：回想過去',opts:['回','悔','匯','會'],ans:0,analysis:'回憶的「回」注音為ㄏㄨㄟˊ。'},
+{id:'q11',type:'注音',level:1,q:'「ㄋㄨˇ」力：盡力去做',opts:['怒','努','奴','弩'],ans:1,analysis:'努力的「努」注音為ㄋㄨˇ。'},
+{id:'q12',type:'注音',level:2,q:'「ㄐㄧㄢ」持：堅持不放棄',opts:['艱','堅','肩','兼'],ans:1,analysis:'堅持的「堅」注音為ㄐㄧㄢ。'},
+{id:'q13',type:'注音',level:1,q:'「ㄒㄧㄣ」苦：辛勞勞累',opts:['心','辛','新','欣'],ans:1,analysis:'辛苦的「辛」注音為ㄒㄧㄣ。'},
+{id:'q14',type:'注音',level:1,q:'「ㄨㄣ」暖：溫暖舒適',opts:['文','溫','聞','穩'],ans:1,analysis:'溫暖的「溫」注音為ㄨㄣ。'},
+{id:'q15',type:'注音',level:2,q:'「ㄉㄨˋ」過：度過時光',opts:['渡','度','杜','肚'],ans:1,analysis:'度過的「度」注音為ㄉㄨˋ。'},
+{id:'q16',type:'國字',level:1,q:'「再接再厲」正確寫法是哪一個？',opts:['再接再歷','在接再勵','再接再厲','再接在厲'],ans:2,analysis:'「厲」代表振作、磨礪，故「再接再厲」才是正解。'},
+{id:'q17',type:'國字',level:3,q:'「不假思索」中「假」的意思是？',opts:['放假','借助、依靠','假裝','真假'],ans:1,analysis:'「不假思索」指不需要依靠思考，形容反應迅速。'},
+{id:'q18',type:'國字',level:2,q:'「川流不息」的「川」指的是？',opts:['平原','河流','高山','道路'],ans:1,analysis:'「川」指河流，比喻像流水一樣連續不斷。'},
+{id:'q19',type:'國字',level:1,q:'下列何者字形正確？',opts:['一思不苟','一絲不苟','一私不苟','一司不苟'],ans:1,analysis:'「一絲不苟」形容做事極為細心謹慎。'},
+{id:'q20',type:'國字',level:3,q:'「戴罪立功」中「戴」的正確用字是？',opts:['帶','戴','代','待'],ans:1,analysis:'「戴罪」表示身負罪過，用字為「戴」。'},
+{id:'q21',type:'國字',level:2,q:'「川流不息」的「息」意思是？',opts:['呼吸','停止','消息','休息'],ans:1,analysis:'「不息」指不停止的意思。'},
+{id:'q22',type:'國字',level:2,q:'下列成語何者用字正確？',opts:['提心弔膽','提心吊膽','提心掉膽','提心釣膽'],ans:1,analysis:'正確寫法為「提心吊膽」，形容非常擔心害怕。'},
+{id:'q23',type:'國字',level:1,q:'「一鼓作氣」正確用字是？',opts:['股','鼓','古','估'],ans:1,analysis:'「鼓」指振作士氣，故用「一鼓作氣」。'},
+{id:'q24',type:'國字',level:3,q:'「悵然若失」的「悵」念作？',opts:['ㄓㄤˋ','ㄔㄤˋ','ㄔㄤ','ㄓㄤ'],ans:1,analysis:'「悵」讀音為ㄔㄤˋ，表示失意、惆悵。'},
+{id:'q25',type:'國字',level:3,q:'「拾金不昧」的「昧」意思是？',opts:['明白','隱藏不清楚','美好','昏暗天色'],ans:1,analysis:'「昧」有隱藏之意，「不昧」指不隱藏佔為己有。'},
+{id:'q26',type:'國字',level:1,q:'「以身作則」正確用字是？',opts:['側','則','測','策'],ans:1,analysis:'「則」表示準則、法則。'},
+{id:'q27',type:'國字',level:2,q:'「川」字的部首是？',opts:['水','巛','一','丨'],ans:1,analysis:'「川」字部首為「巛」。'},
+{id:'q28',type:'國字',level:1,q:'「莫名其妙」正確用字是？',opts:['明','名','銘','冥'],ans:1,analysis:'「莫名」指說不出、無法形容。'},
+{id:'q29',type:'國字',level:3,q:'「入木三分」中「木」指的是？',opts:['樹木','木頭木板','木材買賣','木工'],ans:1,analysis:'相傳王羲之寫字力透木板三分，形容筆力或見解深刻。'},
+{id:'q30',type:'國字',level:2,q:'「舉一反三」的「舉」念作？',opts:['ㄐㄩˋ','ㄐㄩˇ','ㄐㄩ','ㄐㄩㄝˊ'],ans:1,analysis:'「舉」讀音為ㄐㄩˇ。'},
+{id:'q31',type:'成語',level:1,q:'「一石二鳥」的意思是：',opts:['用石頭打鳥','做一件事達到兩個目的','養兩隻鳥','下棋的用語'],ans:1,analysis:'比喻做一件事同時收到雙重效果。'},
+{id:'q32',type:'成語',level:2,q:'「杞人憂天」用來形容：',opts:['天氣很不好','毫無必要的擔心','很聰明的人','天氣預報準'],ans:1,analysis:'比喻不必要的、毫無根據的憂慮與擔心。'},
+{id:'q33',type:'成語',level:1,q:'「守株待兔」比喻：',opts:['勤奮努力工作','心存僥倖不知變通','很會種田','很會抓兔子'],ans:1,analysis:'比喻死守經驗、不知變通，妄想不勞而獲。'},
+{id:'q34',type:'成語',level:1,q:'「畫蛇添足」比喻：',opts:['畫畫技巧很好','多此一舉反而壞事','蛇本來就有腳','做事很仔細'],ans:1,analysis:'比喻多做了不必要的事，反而把事情弄糟。'},
+{id:'q35',type:'成語',level:2,q:'「亡羊補牢」比喻：',opts:['羊丟了就算了','出錯後及時補救','養羊的方法','蓋房子的技術'],ans:1,analysis:'比喻出了差錯後及時想辦法補救，還不算晚。'},
+{id:'q36',type:'成語',level:2,q:'「對牛彈琴」比喻：',opts:['彈琴給牛聽很有趣','對不懂道理的人講深奧道理','牛很喜歡音樂','彈琴技巧很好'],ans:1,analysis:'比喻說話不看對象，白費口舌。'},
+{id:'q37',type:'成語',level:1,q:'「井底之蛙」比喻：',opts:['很會游泳的人','見識短淺的人','住在井裡的動物','很勇敢的人'],ans:1,analysis:'比喻見識狹隘，看不到世界的廣大。'},
+{id:'q38',type:'成語',level:3,q:'「狐假虎威」比喻：',opts:['狐狸很怕老虎','借他人權勢欺壓別人','老虎很兇猛','動物之間的友誼'],ans:1,analysis:'比喻依仗別人的勢力欺壓他人。'},
+{id:'q39',type:'成語',level:2,q:'「掩耳盜鈴」比喻：',opts:['偷東西的技巧高超','自己欺騙自己','很會保護耳朵','鈴鐺很吵'],ans:1,analysis:'比喻自欺欺人，掩蓋不了事實。'},
+{id:'q40',type:'成語',level:3,q:'「刻舟求劍」比喻：',opts:['很會刻木頭','拘泥固執、不知變通','很會游泳找東西','船的製作技術'],ans:1,analysis:'比喻拘泥成規，不懂得因時因地制宜。'},
+{id:'q41',type:'成語',level:3,q:'「塞翁失馬」後面常接的一句是：',opts:['焉知非福','必有所失','後悔莫及','失而復得'],ans:0,analysis:'「塞翁失馬，焉知非福」比喻禍福難料，好壞可能互相轉化。'},
+{id:'q42',type:'成語',level:1,q:'「半途而廢」形容：',opts:['做事很仔細','做事不能堅持到底','走路走一半','半路遇到朋友'],ans:1,analysis:'比喻做事沒有毅力，中途放棄。'},
+{id:'q43',type:'成語',level:2,q:'「名副其實」的意思是：',opts:['名字很好聽','名聲與實際相符','很有名氣','名字取錯了'],ans:1,analysis:'指名聲或稱號與實際情況完全相符。'},
+{id:'q44',type:'成語',level:1,q:'「專心致志」形容：',opts:['三心二意','全神貫注做一件事','做很多件事','很有志向但不努力'],ans:1,analysis:'形容一心一意、聚精會神地做事。'},
+{id:'q45',type:'成語',level:1,q:'「三心二意」形容：',opts:['聰明機靈','猶豫不決、意志不堅定','非常專心','有很多想法'],ans:1,analysis:'形容意志不堅定，猶豫反覆。'},
+{id:'q46',type:'成語',level:2,q:'「精益求精」形容：',opts:['已經很完美了不用再努力','追求更好更完美','偷工減料','馬馬虎虎'],ans:1,analysis:'指已經很好了，還要求更好。'},
+{id:'q47',type:'成語',level:2,q:'「見異思遷」形容：',opts:['意志堅定','意志不堅、容易改變心意','很有創意','觀察力很好'],ans:1,analysis:'看到別的事物就想改變原來的主意，形容意志不堅。'},
+{id:'q48',type:'成語',level:1,q:'「聞雞起舞」形容：',opts:['聽到雞叫很害怕','勤奮努力、及早奮發','跳舞跳得很好','養雞的技巧'],ans:1,analysis:'比喻有志之士及時奮發，勤勉自勵。'},
+{id:'q49',type:'成語',level:2,q:'「鍥而不捨」形容：',opts:['半途而廢','堅持不放棄、努力到底','做事很快','馬上放棄'],ans:1,analysis:'比喻做事有恆心，堅持到底不放棄。'},
+{id:'q50',type:'成語',level:1,q:'「水滴石穿」比喻：',opts:['水很珍貴','持之以恆、終能成功','石頭很堅硬','天氣很潮濕'],ans:1,analysis:'比喻只要有恆心堅持，即使力量微小也能成功。'},
+{id:'q51',type:'成語',level:3,q:'「臥薪嘗膽」形容：',opts:['生活奢侈享受','刻苦自勵、發憤圖強','喜歡吃苦味食物','睡眠品質不好'],ans:1,analysis:'比喻人刻苦自勵，發憤圖強以雪恥或達成目標。'},
+{id:'q52',type:'成語',level:3,q:'「愚公移山」比喻：',opts:['做傻事','堅持不懈、終能成功的毅力','搬家很麻煩','山很難移動'],ans:1,analysis:'比喻只要有堅定的毅力，再困難的事也能完成。'},
+{id:'q53',type:'成語',level:2,q:'「後起之秀」用來形容：',opts:['年紀較大的長輩','後來表現傑出的新人','跑步落後的人','很晚起床的人'],ans:1,analysis:'指後輩中傑出優秀的人才。'},
+{id:'q54',type:'成語',level:2,q:'「有志者事竟成」的意思是：',opts:['沒有志向的人比較容易成功','只要立定志向、努力不懈就能成功','事情一定會成功','志向不重要'],ans:1,analysis:'勉勵人立定志向、堅持努力，終能成功。'},
+{id:'q55',type:'成語',level:1,q:'「和顏悅色」形容：',opts:['表情兇惡','態度和藹、面容愉悅','臉色蒼白','非常生氣'],ans:1,analysis:'形容態度溫和、臉色和悅。'},
+{id:'q56',type:'自然',level:1,q:'植物行光合作用主要吸收哪一種氣體？',opts:['氧氣','二氧化碳','氮氣','氫氣'],ans:1,analysis:'植物利用陽光，吸收二氧化碳並釋放氧氣進行光合作用。'},
+{id:'q57',type:'自然',level:1,q:'人體最大的器官是？',opts:['心臟','肝臟','皮膚','肺臟'],ans:2,analysis:'皮膚覆蓋全身，是人體面積最大的器官。'},
+{id:'q58',type:'自然',level:1,q:'水的三態不包含下列哪一項？',opts:['固態','液態','氣態','火態'],ans:3,analysis:'水的三態為固態（冰）、液態（水）、氣態（水蒸氣），沒有「火態」。'},
+{id:'q59',type:'自然',level:2,q:'月亮本身會發光嗎？',opts:['會，月亮自己會發光','不會，是反射太陽光','只有滿月時會發光','只有半夜會發光'],ans:1,analysis:'月亮本身不發光，我們看到的光是反射自太陽的光。'},
+{id:'q60',type:'自然',level:1,q:'彩虹通常會出現在什麼天氣狀況之後？',opts:['下雪後','雨後','颳風後','起霧後'],ans:1,analysis:'雨後空氣中有小水滴，陽光經過折射與反射形成彩虹。'},
+{id:'q61',type:'自然',level:1,q:'蝴蝶的生長過程不包含下列哪一個階段？',opts:['卵','幼蟲','蛹','蝌蚪'],ans:3,analysis:'蝌蚪是青蛙的幼體，並非蝴蝶生長過程的階段。'},
+{id:'q62',type:'自然',level:2,q:'地球自轉一圈大約需要多久？',opts:['12小時','24小時','1個月','1年'],ans:1,analysis:'地球自轉一圈大約24小時，形成日夜變化。'},
+{id:'q63',type:'自然',level:2,q:'下列何者屬於可再生能源？',opts:['煤炭','石油','太陽能','天然氣'],ans:2,analysis:'太陽能取之不盡、用之不竭，屬於可再生能源。'},
+{id:'q64',type:'自然',level:1,q:'心臟主要的功能是？',opts:['消化食物','輸送血液','呼吸空氣','排出廢物'],ans:1,analysis:'心臟像幫浦一樣，負責推動血液在全身循環。'},
+{id:'q65',type:'自然',level:1,q:'植物的根部主要功能是？',opts:['行光合作用','吸收水分與養分','開花結果','儲存陽光'],ans:1,analysis:'根部負責從土壤中吸收水分和養分供給植物。'},
+{id:'q66',type:'自然',level:2,q:'下列何者屬於哺乳類動物？',opts:['鯨魚','鯊魚','鱷魚','章魚'],ans:0,analysis:'鯨魚用肺呼吸並以乳汁哺育幼兒，屬於哺乳類。'},
+{id:'q67',type:'自然',level:2,q:'空氣中含量最多的氣體是？',opts:['氧氣','氮氣','二氧化碳','氫氣'],ans:1,analysis:'空氣中約78%為氮氣，21%為氧氣。'},
+{id:'q68',type:'自然',level:3,q:'保護地球免受過多紫外線傷害的重要氣體是？',opts:['氮氣','臭氧','二氧化碳','氫氣'],ans:1,analysis:'大氣中的臭氧層能吸收大部分有害的紫外線。'},
+{id:'q69',type:'自然',level:1,q:'溫度計主要用來測量什麼？',opts:['濕度','溫度','風速','氣壓'],ans:1,analysis:'溫度計是測量物體或環境溫度的工具。'},
+{id:'q70',type:'自然',level:1,q:'蜜蜂傳播花粉主要幫助植物做什麼？',opts:['行光合作用','授粉繁殖','儲存養分','抵抗害蟲'],ans:1,analysis:'蜜蜂採蜜時會沾附花粉，幫助植物授粉繁殖後代。'},
+{id:'q71',type:'社會',level:1,q:'台灣最高的山是？',opts:['阿里山','玉山','雪山','合歡山'],ans:1,analysis:'玉山主峰海拔3952公尺，為台灣第一高峰。'},
+{id:'q72',type:'社會',level:1,q:'我國國旗的顏色不包含下列哪一項？',opts:['紅色','藍色','白色','紫色'],ans:3,analysis:'我國國旗為青天、白日、滿地紅，並無紫色。'},
+{id:'q73',type:'社會',level:2,q:'世界最大的海洋是？',opts:['大西洋','印度洋','太平洋','北極海'],ans:2,analysis:'太平洋面積最大，涵蓋地球表面約三分之一。'},
+{id:'q74',type:'社會',level:1,q:'中華民國目前的首都設於？',opts:['高雄','台中','台北','台南'],ans:2,analysis:'中華民國中央政府目前設於台北市。'},
+{id:'q75',type:'社會',level:1,q:'下列何者是台灣知名的離島？',opts:['澎湖','日月潭','阿里山','太魯閣'],ans:0,analysis:'澎湖群島位於台灣海峽，是知名的離島縣。'},
+{id:'q76',type:'社會',level:1,q:'交通號誌紅燈代表什麼意思？',opts:['直行','停止','左轉','加速前進'],ans:1,analysis:'紅燈表示禁止通行，須停止等候。'},
+{id:'q77',type:'社會',level:2,q:'民主國家最重要的制度之一是？',opts:['世襲制度','選舉制度','抽籤制度','軍事統治'],ans:1,analysis:'選舉讓人民能選出代表自己的政府與民意代表。'},
+{id:'q78',type:'社會',level:3,q:'下列何者屬於三級產業（服務業）？',opts:['農業種植','工廠製造','餐飲服務業','漁業捕撈'],ans:2,analysis:'三級產業泛指服務業，如餐飲、金融、教育等。'},
+{id:'q79',type:'社會',level:1,q:'地圖上通常最上方代表哪個方向？',opts:['東方','南方','西方','北方'],ans:3,analysis:'一般地圖繪製慣例，上方代表北方。'},
+{id:'q80',type:'社會',level:2,q:'下列何者是我國常見的代表性花卉？',opts:['玫瑰','梅花','鬱金香','向日葵'],ans:1,analysis:'梅花耐寒堅忍，常被視為我國具代表性的花卉。'},
+{id:'q81',type:'社會',level:1,q:'郵局主要提供的服務不包含下列哪一項？',opts:['寄信','存款','寄送包裹','看病'],ans:3,analysis:'看病應至醫院或診所，非郵局提供的服務。'},
+{id:'q82',type:'社會',level:2,q:'下列何者屬於節能減碳的日常行為？',opts:['隨手關燈','長時間開冷氣','浪費用水','過度包裝商品'],ans:0,analysis:'隨手關燈可減少電力消耗，有助節能減碳。'},
+{id:'q83',type:'社會',level:1,q:'聽到消防車鳴笛聲接近時應該？',opts:['加速超車','讓道','停在路中間','按喇叭抗議'],ans:1,analysis:'應盡速讓道，以利消防車執行緊急救援任務。'},
+{id:'q84',type:'社會',level:2,q:'下列何者屬於我國的直轄市？',opts:['新竹市','嘉義市','台北市','基隆市'],ans:2,analysis:'台北市為我國六都之一的直轄市。'},
+{id:'q85',type:'社會',level:2,q:'被尊稱為中華民國國父的是？',opts:['蔣中正','孫中山','鄭成功','岳飛'],ans:1,analysis:'孫中山先生領導革命，建立中華民國，被尊為國父。'},
+{id:'q86',type:'文言文',level:3,q:'「三人行，必有我師焉」出自哪一本經典？',opts:['論語','孟子','詩經','老子'],ans:0,analysis:'此句出自《論語．述而》，強調隨時向他人學習的態度。'},
+{id:'q87',type:'文言文',level:3,q:'「學而時習之，不亦說乎」中的「說」通哪個字？',opts:['說話的說','悅','設','脫'],ans:1,analysis:'「說」通「悅」，表示喜悅、開心。'},
+{id:'q88',type:'文言文',level:3,q:'「不積跬步，無以至千里」是勉勵人要？',opts:['一步登天','累積努力、循序漸進','放棄目標','走捷徑'],ans:1,analysis:'比喻學習或做事須從小處累積，才能達成遠大目標。'},
+{id:'q89',type:'文言文',level:4,q:'「己所不欲，勿施於人」的意思是？',opts:['自己想要的都要給別人','將心比心，不要求別人做自己不願意的事','別人的東西不能拿','要求別人配合自己'],ans:1,analysis:'強調將心比心，是儒家「恕道」精神的體現。'},
+{id:'q90',type:'文言文',level:3,q:'「溫故而知新」的意思是？',opts:['忘記舊的知識','複習舊知識能得到新體會','只學新知識就好','溫習沒有用'],ans:1,analysis:'指複習舊有的學問，可以從中領悟出新的道理。'},
+{id:'q91',type:'文言文',level:3,q:'「有朋自遠方來，不亦樂乎」的「樂」念作？',opts:['ㄩㄝˋ','ㄌㄜˋ','ㄌㄠˋ','ㄒㄩㄝˊ'],ans:1,analysis:'此句「樂」讀作ㄌㄜˋ，表示快樂之意。'},
+{id:'q92',type:'文言文',level:4,q:'「業精於勤，荒於嬉」是在勉勵人要？',opts:['多多玩樂','勤奮努力','放鬆心情','荒廢學業'],ans:1,analysis:'指學業因勤奮而精進，因嬉戲怠惰而荒廢。'},
+{id:'q93',type:'文言文',level:4,q:'「千里之行，始於足下」比喻？',opts:['旅行要規劃周全','做大事要從小處著手開始','走路要小心','千里路很遙遠不用嘗試'],ans:1,analysis:'比喻再遠大的目標，也要從眼前的第一步做起。'},
+{id:'q94',type:'文言文',level:4,q:'「盡信書，不如無書」提醒人：',opts:['完全不要讀書','讀書要有獨立判斷力，不可盡信','書都是錯的','讀書沒有用'],ans:1,analysis:'語出《孟子》，提醒讀書要有思辨能力，不能全盤接受。'},
+{id:'q95',type:'文言文',level:3,q:'「知之為知之，不知為不知」教人要：',opts:['裝作什麼都懂','誠實面對自己懂與不懂','不懂也要裝懂','懂的也要裝不懂'],ans:1,analysis:'出自《論語》，教導人要有誠實面對自己知識的態度。'},
+{id:'q96',type:'科學',level:3,q:'水的化學式是？',opts:['CO2','H2O','O2','NaCl'],ans:1,analysis:'水由兩個氫原子和一個氧原子組成，化學式為H2O。'},
+{id:'q97',type:'科學',level:3,q:'力的國際單位是？',opts:['公斤','牛頓','焦耳','伏特'],ans:1,analysis:'力的國際單位為牛頓（Newton，簡稱N）。'},
+{id:'q98',type:'科學',level:4,q:'光在真空中的速度大約是每秒幾公里？',opts:['3千公里','3萬公里','30萬公里','300萬公里'],ans:2,analysis:'光速在真空中約為每秒30萬公里，是宇宙中最快的速度。'},
+{id:'q99',type:'科學',level:2,q:'下列何者是良好的電導體？',opts:['木頭','橡膠','銅','塑膠'],ans:2,analysis:'銅是常見的金屬導體，導電性良好，常用於電線。'},
+{id:'q100',type:'科學',level:2,q:'聲音無法在下列哪種環境中傳播？',opts:['空氣中','水中','固體中','真空中'],ans:3,analysis:'聲音需要介質才能傳播，真空中沒有介質，聲音無法傳遞。'}
+];
+
+const DEFAULT_TASKS=[
+  {id:'t1',label:'清洗餐盒',icon:'🍱',pts:1},{id:'t2',label:'閱讀課外書',icon:'📖',pts:1},
+  {id:'t3',label:'做家事',icon:'🧹',pts:1},{id:'t4',label:'襪子收好放好',icon:'🧦',pts:1},
+  {id:'t5',label:'主動整理房間',icon:'🛏️',pts:1},{id:'t6',label:'聯絡簿拿給家長簽名',icon:'✏️',pts:1},
+  {id:'t7',label:'自主複習功課',icon:'📚',pts:1},{id:'t8',label:'功課認真且不拖延完成',icon:'📝',pts:1}
+];
+const DEFAULT_SPECIAL=[
+  {id:'s1',label:'準時熄燈睡覺',icon:'😴',pts:3,penalty:-2,desc:'打勾+3，未完成-2'},
+  {id:'s2',label:'學校聽寫獲得100分',icon:'💯',pts:3,penalty:0,desc:'打勾+3'},
+  {id:'s3',label:'考卷分數達90分以上',icon:'🏅',pts:2,penalty:0,desc:'打勾+2'}
+];
+const DEFAULT_PENALTIES=[
+  {id:'p1',label:'說不禮貌的話/髒話',icon:'🤬'},{id:'p2',label:'洗澡毛巾隨手亂丟',icon:'🤦'},
+  {id:'p3',label:'上完馬桶忘記沖水',icon:'🚽'},{id:'p4',label:'脫下來的衣服亂扔',icon:'👕'},
+  {id:'p5',label:'用完的口罩亂丟',icon:'😷'},{id:'p6',label:'忘記帶作業或課本回家',icon:'😰'},
+  {id:'p7',label:'態度不佳、不尊重他人',icon:'😤'},{id:'p8',label:'玩遊戲輸了發脾氣',icon:'🎮'},
+  {id:'p9',label:'沒遵守約定的螢幕時間',icon:'⏰'},{id:'p10',label:'寫字極度潦草應付',icon:'✍️'}
+];
+const INITIAL_LUCK_CARDS=[
+  {id:'lk1',name:'喝一杯水',icon:'💧',pts:'健康',desc:'多喝水有益身心，立刻喝完一杯溫開水！'},
+  {id:'lk2',name:'晚睡10分鐘',icon:'🌛',pts:'特權',desc:'今晚可以合法獲得延長 10 分鐘的自由時間！'},
+  {id:'lk3',name:'晚睡5分鐘',icon:'🌙',pts:'特權',desc:'今天表現優良，晚上可以稍微晚 5 分鐘睡覺。'},
+  {id:'lk4',name:'5分鐘不說話',icon:'🤐',pts:'定心',desc:'挑戰 5 分鐘保持安靜專注，沉澱心情。'},
+  {id:'lk5',name:'10分鐘不說話',icon:'🤫',pts:'禪定',desc:'進階挑戰 10 分鐘不發一言，體會極致安靜。'},
+  {id:'lk6',name:'消掉一個錯誤',icon:'🧹',pts:'特赦',desc:'可以拿來抵消今天被記下的任意一項表現缺失項目！'},
+  {id:'lk7',name:'大聲朗讀成語含解釋',icon:'📖',pts:'智慧',desc:'選一本成語故事，大聲朗讀一則成語並清楚解釋意思給爸媽聽。'},
+  {id:'lk8',name:'吃一個小點心',icon:'🍪',pts:'獎勵',desc:'經由家長核可，可以獲得一個美味的健康小點心。'},
+  {id:'lk9',name:'免做家事一次',icon:'🛋️',pts:'特權',desc:'今天可以免除一項常規家事，讓爸媽來幫你代班。'}
+];
+const INITIAL_PUNISH_CARDS=[
+  {id:'pu1',text:'負責清洗全家碗盤'},{id:'pu2',text:'使用吸塵器清理客廳'},
+  {id:'pu3',text:'負責拖完全家地板'},{id:'pu4',text:'加寫一份練習功課'},
+  {id:'pu5',text:'認真幫爸爸或媽媽按摩10分鐘'},{id:'pu6',text:'原地做20下仰臥起坐'},
+  {id:'pu7',text:'閉上嘴巴安靜反省15分鐘'},{id:'pu8',text:'原地罰跪或罰站5分鐘'},
+  {id:'pu9',text:'主動把自己的書桌徹底整理乾淨'}
+];
+const DIFF_LABELS=[{v:1,l:'小學中低年級',d:'基礎注音與簡易國字'},{v:2,l:'小學高年級',d:'國字辨正與常規成語'},{v:3,l:'國中程度',d:'進階成語與文言文入門'},{v:4,l:'高中程度',d:'深層文言文與科學知識'}];
+
+const SV='kidsApp_v7_final';
+let state, quizSession=null, calCursor=new Date();
+function sv(k,v){localStorage.setItem(k,JSON.stringify(v));}
+function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;}}
+function saveState(){sv(SV,state); localStorage.setItem('kidsApp_lastSave',new Date().toLocaleString('zh-TW')); }
+function todayKey(d){ d=d||new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function dateKeyMinus(days){ const d=new Date(); d.setDate(d.getDate()-days); return todayKey(d); }
+
+function mkKid(name,avatar){
+  return {
+    name,avatar,totalPts:0,history:[],checks:{},specChecks:{},penalties:{},
+    todaysMistakeCount:0, goodActionCounter:0, allActionCounter:0,
+    lastLuckyDate:'', difficulty:2, wrongQids:[],
+    customTasks:[], customPenalties:[], customSpecial:[], hiddenDefault:[], hiddenPenalty:[],
+    treasureBox:[], punishQueue:[], activeTab:0,
+    homework:{}, noDefectStreak:0, lastStreakCheckDate:'', streakBonusAvailable:false,
+    gachaLog:[]
+  };
+}
+function setupKidCountUI(){
+  const wrap=document.getElementById('kidCountRow');
+  wrap.innerHTML=[1,2,3,4].map(n=>'<button type="button" class="kc-btn'+(n===2?' active':'')+'" data-n="'+n+'" onclick="pickKidCount('+n+')">'+n+' 人</button>').join('');
+  pickKidCount(2);
+}
+function pickKidCount(n){
+  document.querySelectorAll('.kc-btn').forEach(b=>b.classList.toggle('active', +b.dataset.n===n));
+  const names=['小明','小華','小美','小強'];
+  const avs=['🐯','🐰','🐱','🐶'];
+  const wrap=document.getElementById('nameInputsWrap');
+  let html='';
+  for(let i=0;i<n;i++){ html+='<input class="name-field" id="nameInput'+i+'" maxlength="6" value="'+names[i]+'" placeholder="小孩'+(i+1)+'的名字">'; }
+  wrap.innerHTML=html;
+  wrap.dataset.count=n;
+}
+function startApp(){
+  const n=+document.getElementById('nameInputsWrap').dataset.count || 2;
+  const kids=[]; const avs=['🐯','🐰','🐱','🐶'];
+  for(let i=0;i<n;i++){
+    const v=(document.getElementById('nameInput'+i).value||'').trim();
+    if(!v){notify('請填寫所有名字！');return;}
+    kids.push(mkKid(v,avs[i]));
+  }
+  state={
+    kids, activeKid:0,
+    luckCardsPool:[...INITIAL_LUCK_CARDS],
+    punishCardsPool:[...INITIAL_PUNISH_CARDS],
+    globalQBank:[...QBANK]
+  };
+  saveState();
+  document.getElementById('setupScreen').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  renderAll();
+}
+
+function addHist(kid,label,pts){
+  kid.history.unshift({id:'h'+Date.now()+Math.random().toString(36).slice(2,6),label,pts,time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}),date:todayKey()});
+  if(kid.history.length>150) kid.history.pop();
+}
+function delHistItem(ki,id){
+  const kid=state.kids[ki]; kid.history=kid.history.filter(h=>h.id!==id); saveState(); renderAll();
+}
+function delGachaItem(ki,idx){
+  const kid=state.kids[ki]; if(!kid.gachaLog) return; kid.gachaLog.splice(idx,1); saveState(); renderAll();
+}
+function quickAdj(ki,delta){
+  const kid=state.kids[ki]; kid.totalPts+=delta;
+  addHist(kid,(delta>0?'🔧 快速加分':'🔧 快速扣分')+'（'+(delta>0?'+':'')+delta+'）',delta);
+  if(delta>0) checkPointsMilestone(kid);
+  saveState(); renderAll();
+}
+
+/* ════ 加分邏輯：命運卡每+3次觸發、智慧卡每5次動作觸發 ════ */
+function toggleTask(ki,id,isDone){
+  const kid=state.kids[ki]; const dk=todayKey();
+  if(!kid.checks[dk]) kid.checks[dk]={};
+  const was=!!kid.checks[dk][id]; if(isDone===was) return;
+  kid.checks[dk][id]=isDone;
+  const t=[...DEFAULT_TASKS,...(kid.customTasks||[])].find(x=>x.id===id)||{label:id,pts:1};
+
+  if(isDone){
+    kid.totalPts+=t.pts; addHist(kid,'✅ '+t.label,+t.pts);
+    AudioEngine.playDone(); checkPointsMilestone(kid);
+    kid.goodActionCounter=(kid.goodActionCounter||0)+1; kid.allActionCounter=(kid.allActionCounter||0)+1;
+    maybeTriggerLuck(ki); maybeTriggerQuiz(ki,'good');
+  }else{
+    kid.totalPts-=t.pts; addHist(kid,'☐ '+t.label+' (取消)',-t.pts);
+  }
+  saveState(); renderAll();
+}
+function toggleSpecial(ki,id,isDone){
+  const kid=state.kids[ki]; const dk=todayKey();
+  if(!kid.specChecks[dk]) kid.specChecks[dk]={};
+  const was=!!kid.specChecks[dk][id]; if(isDone===was) return;
+  kid.specChecks[dk][id]=isDone;
+  const s=[...DEFAULT_SPECIAL,...(kid.customSpecial||[])].find(x=>x.id===id); if(!s) return;
+  let delta=isDone?(s.penalty<0?s.pts-s.penalty:s.pts):(s.penalty<0?-(s.pts-s.penalty):-s.pts);
+  kid.totalPts+=delta;
+  addHist(kid,(isDone?'⭐':'☐')+' '+s.label+(isDone?'':' (取消)'),delta);
+  if(isDone){
+    AudioEngine.playDone(); checkPointsMilestone(kid);
+    kid.goodActionCounter=(kid.goodActionCounter||0)+1; kid.allActionCounter=(kid.allActionCounter||0)+1;
+    maybeTriggerLuck(ki); maybeTriggerQuiz(ki,'good');
+  }
+  saveState(); renderAll();
+}
+function checkPointsMilestone(kid) {
+  if (kid.totalPts > 0 && kid.totalPts % 10 === 0) {
+    AudioEngine.playMilestone();
+    setTimeout(() => {
+      openModal('<div class="me">🎉</div><h2>完美跨越里程碑！</h2><p>恭喜 <strong>'+kid.name+'</strong> 達到全新的 <strong>'+kid.totalPts+'</strong> 點！<br>保持這個完美勢頭，繼續加油！</p><button class="mbtn primary" onclick="closeModal()">太棒了！</button>');
+    }, 400);
+  }
+}
+
+/* ════ 缺失邏輯：機會（懲罰任務）卡每5次累計缺失強制觸發 ════ */
+function togglePenalty(ki,id,isChecked){
+  const kid=state.kids[ki]; const dk=todayKey();
+  if(!kid.penalties[dk]) kid.penalties[dk]={};
+  const was=!!kid.penalties[dk][id]; if(isChecked===was) return;
+  kid.penalties[dk][id]=isChecked;
+  const p=[...DEFAULT_PENALTIES,...(kid.customPenalties||[])].find(x=>x.id===id)||{label:id};
+
+  if(isChecked){
+    kid.totalPts-=1; addHist(kid,'❌ '+p.label,-1);
+    kid.todaysMistakeCount=(kid.todaysMistakeCount||0)+1;
+    kid.allActionCounter=(kid.allActionCounter||0)+1;
+    if(kid.todaysMistakeCount>=5){
+      kid.todaysMistakeCount=0;
+      saveState(); renderAll();
+      setTimeout(()=>{ givePunish(ki); },300);
+      return;
+    }
+    if(kid.todaysMistakeCount===3){
+      saveState(); renderAll();
+      setTimeout(()=>{ openModal('<div class="me">⚠️</div><h2>已累積 3 次缺失！</h2><p>再累積 2 次（滿5次）就會強制觸發懲罰任務卡，請提醒孩子多加注意！</p><button class="mbtn danger" onclick="closeModal()">我會多注意</button>'); },300);
+      return;
+    }
+    maybeTriggerQuiz(ki,'bad');
+  }else{
+    kid.totalPts+=1; addHist(kid,'↩️ '+p.label+' (取消)',+1);
+    if(kid.todaysMistakeCount>0) kid.todaysMistakeCount--;
+  }
+  saveState(); renderAll();
+}
+
+/* ════ 命運卡：每累積 3 次加分動作觸發一次 ════ */
+function maybeTriggerLuck(ki){
+  const kid=state.kids[ki];
+  if(kid.goodActionCounter<3) return;
+  kid.goodActionCounter=0;
+  const pool=state.luckCardsPool || INITIAL_LUCK_CARDS;
+  if(pool.length===0) return;
+  const card=pool[Math.floor(Math.random()*pool.length)];
+  saveState();
+  setTimeout(()=>showLuckyOffer(ki,card),600);
+}
+function showLuckyOffer(ki,card){
+  const kid=state.kids[ki];
+  openModal(buildCardHTML(card)+'<h2 style="margin-top:10px">🎊 表現優異，命運卡降臨！</h2><p>是否將此命運卡收進【'+kid.name+'】的專屬寶盒中存放？</p><button class="mbtn primary" onclick="addToBox('+ki+',\''+card.id+'\');closeModal()">🎁 收入個人寶盒</button><button class="mbtn secondary" onclick="closeModal()">直接捨棄</button>');
+}
+function addToBox(ki,cardId){
+  const kid=state.kids[ki]; const pool=state.luckCardsPool || INITIAL_LUCK_CARDS;
+  const card=pool.find(c=>c.id===cardId); if(!card) return;
+  if(!kid.treasureBox) kid.treasureBox=[];
+  kid.treasureBox.push({kind:'luck',...card,uid:'u'+Date.now()});
+  addHist(kid,'🎁 獲得命運卡：'+card.name,0);
+  saveState(); renderAll();
+}
+function useCard(ki,uid){
+  const kid=state.kids[ki]; const card=(kid.treasureBox||[]).find(c=>c.uid===uid); if(!card) return;
+  if(card.kind==='quiz'){
+    kid.treasureBox=kid.treasureBox.filter(c=>c.uid!==uid); saveState(); renderAll();
+    startQuiz(ki, card.qmode||'good'); return;
+  }
+  let effect='特權/卡片效果：【'+card.name+'】已啟動，請家長協助執行！';
+  if(card.id==='lk6' || (card.name||'').includes('消掉一個錯誤')){
+    const dk=todayKey(); const penKeys=Object.keys(kid.penalties[dk]||{}).filter(k=>kid.penalties[dk][k]);
+    if(penKeys.length>0){
+      kid.penalties[dk][penKeys[penKeys.length-1]]=false; kid.totalPts+=1;
+      if(kid.todaysMistakeCount>0) kid.todaysMistakeCount--;
+      effect='✨ 成功發動特赦！已自動消掉最後一個錯誤，點數回復 1 點。';
+    }else{ effect='目前沒有任何缺失記錄可以消除，但卡片已消耗。'; }
+  }
+  addHist(kid,'🃏 使用命運卡：'+card.name,0);
+  kid.treasureBox=kid.treasureBox.filter(c=>c.uid!==uid);
+  saveState(); renderAll();
+  openModal('<div class="me">🔮</div><h2>命運卡已發動</h2><p>'+escH(effect)+'</p><button class="mbtn primary" onclick="closeModal()">確認</button>');
+}
+
+/* ════ 懲罰任務卡：滿5次缺失強制觸發 ════ */
+function givePunish(ki){
+  const kid=state.kids[ki]; const pool = state.punishCardsPool || INITIAL_PUNISH_CARDS;
+  if(pool.length===0){ notify('懲罰卡庫目前為空，請家長先去卡片中心新增！'); return; }
+  const pCard=pool[Math.floor(Math.random()*pool.length)];
+  if(!kid.punishQueue) kid.punishQueue=[];
+  kid.punishQueue.push({uid:'pq'+Date.now(),text:pCard.text,date:todayKey(),time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});
+  addHist(kid,'🃏 抽到懲罰卡：'+pCard.text,0);
+  saveState(); renderAll();
+  openModal(buildPunishCardHTML(pCard.text)+'<p style="font-size:.8rem;color:var(--soft);margin-top:10px">⚠️ 此懲罰已放入「懲罰待完成區」，完成後請由家長點擊消除。</p><button class="mbtn danger" onclick="closeModal()">立刻去執行</button>');
+}
+function donePunish(ki,uid){
+  const kid=state.kids[ki]; if(!kid.punishQueue) return;
+  const p=kid.punishQueue.find(x=>x.uid===uid); kid.punishQueue=kid.punishQueue.filter(x=>x.uid!==uid);
+  addHist(kid,'✅ 完成懲罰任務：'+(p?p.text:''),0);
+  saveState(); renderAll();
+  openModal('<div class="me">👍</div><h2>懲罰完成，重回軌道</h2><p>很好！有認真為自己的行為負責。下次一定要多加注意！</p><button class="mbtn primary" onclick="closeModal()">我會繼續保持好習慣</button>');
+}
+
+/* ════ 智慧卡：每累積 5 次加減分動作觸發，可選作答或先收藏 ════ */
+function maybeTriggerQuiz(ki,mode){
+  const kid=state.kids[ki];
+  if((kid.allActionCounter||0) < 5) return;
+  kid.allActionCounter=0;
+  saveState();
+  setTimeout(()=>offerQuiz(ki,mode),700);
+}
+function offerQuiz(ki,mode){
+  openModal('<div class="me">🧠</div><h2>⚡ 智慧卡出現了！</h2><p>要現在挑戰 5 題益智問答，還是先把這張智慧卡收進寶盒，之後有空再作答呢？</p>'
+    +'<div class="qsave-row"><button class="mbtn primary" onclick="closeModal();startQuiz('+ki+',\''+mode+'\')">📝 現在作答</button><button class="mbtn secondary" onclick="saveQuizCard('+ki+',\''+mode+'\')">🎁 先收進寶盒</button></div>');
+}
+function saveQuizCard(ki,mode){
+  const kid=state.kids[ki]; if(!kid.treasureBox) kid.treasureBox=[];
+  kid.treasureBox.push({kind:'quiz',uid:'u'+Date.now(),name:'智慧挑戰卡',icon:'🧠',qmode:mode,desc:'收藏的智慧卡，答對可獲得點數獎勵，可隨時取用作答。'});
+  addHist(kid,'🎁 收藏了一張智慧卡',0);
+  saveState(); renderAll(); closeModal();
+}
+function startQuiz(ki,mode){
+  const kid=state.kids[ki]; const lvl=kid.difficulty||2;
+  const fullPool = state.globalQBank || QBANK;
+  let pool=fullPool.filter(q=>q.level<=lvl); if(pool.length===0) pool=[...fullPool];
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  const wrong=shuffle(pool.filter(q=>(kid.wrongQids||[]).includes(q.id)));
+  const others=shuffle(pool.filter(q=>!(kid.wrongQids||[]).includes(q.id)));
+  let chosen=[...wrong.slice(0,2),...others].slice(0,5);
+  if(chosen.length<5) chosen=shuffle([...pool]).slice(0,5);
+  quizSession={ki,mode,questions:chosen,current:0,score:0,wrongInSession:[]};
+  showQuizModal();
+}
+function showQuizModal(){
+  if(!quizSession) return;
+  const {questions,current,score}=quizSession; const q=questions[current];
+  const opts=q.opts.map((o,i)=>'<button class="quiz-opt" onclick="answerQ('+i+')" id="qo'+i+'">'+String.fromCharCode(65+i)+'. '+escH(o)+'</button>').join('');
+  openModal('<div class="me">📝</div><h2>⚡ 智慧卡挑戰</h2>'
+    +'<div class="quiz-progress"><span>目前第 '+(current+1)+' / '+questions.length+' 題</span><span style="color:#667eea;font-weight:900">得分：'+score+'</span></div>'
+    +'<div class="quiz-q"><strong>【'+q.type+'】</strong>'+escH(q.q)+'</div>'
+    +'<div class="quiz-opts">'+opts+'</div>'
+    +'<div id="qAna"></div>'
+    +'<button class="mbtn primary" id="qNext" style="display:none;margin-top:10px" onclick="nextQ()">下一題 →</button>');
+}
+function answerQ(chosen){
+  if(!quizSession) return; const q=quizSession.questions[quizSession.current];
+  for(let i=0;i<q.opts.length;i++){const b=document.getElementById('qo'+i); if(b) b.disabled=true;}
+  const isOk=(chosen===q.ans);
+  if(isOk){ document.getElementById('qo'+chosen)?.classList.add('correct'); quizSession.score++; }
+  else{ document.getElementById('qo'+chosen)?.classList.add('wrong'); document.getElementById('qo'+q.ans)?.classList.add('reveal'); quizSession.wrongInSession.push(q.id); }
+  document.getElementById('qAna').innerHTML='<div class="quiz-analysis"><strong>'+(isOk?'✅ 恭喜答對！':'❌ 答錯囉！')+'</strong><br>解析：'+escH(q.analysis)+'</div>';
+  document.getElementById('qNext').style.display='block';
+}
+function nextQ(){
+  quizSession.current++; if(quizSession.current>=quizSession.questions.length){ finishQuiz(); return; } showQuizModal();
+}
+function finishQuiz(){
+  const {ki,score,questions,wrongInSession,mode}=quizSession; const total=questions.length; const kid=state.kids[ki];
+  let pts=0; let msg='';
+  if(score===total){
+    pts = (mode==='bad') ? 1 : 2;
+    msg = (mode==='bad') ? '👍 全對表現優異！獲得 +1 點！' : '🎉 完美全對表現優異！獲得 +2 點！';
+  }else{
+    msg='只要有一題答錯就無法加分囉，再接再厲！';
+  }
+  if(pts){ kid.totalPts+=pts; addHist(kid,'📝 智慧卡挑戰全對 '+score+'/'+total,pts); checkPointsMilestone(kid); }
+  else{ addHist(kid,'📝 智慧卡挑戰答對 '+score+'/'+total+'（未全對，無加分）',0); }
+  const corrected=questions.filter(q=>!wrongInSession.includes(q.id)).map(q=>q.id);
+  kid.wrongQids=[...new Set([...(kid.wrongQids||[]).filter(id=>!corrected.includes(id)),...wrongInSession])];
+  saveState(); quizSession=null;
+  openModal('<div class="me">📊</div><h2>挑戰結束</h2><p>最終答對題數：<strong>'+score+' / '+total+'</strong><br>'+msg+'</p><button class="mbtn primary" onclick="closeModal();renderAll()">確認收下</button>');
+  renderAll();
+}
+
+/* ════ 20/50 點扭蛋（金額皆為5元倍數）════ */
+function rndMultipleOf5(min,max){ const lo=Math.ceil(min/5), hi=Math.floor(max/5); const n=lo+Math.floor(Math.random()*(hi-lo+1)); return n*5; }
+function openGacha(ki,tier){
+  const kid=state.kids[ki]; if(kid.totalPts<tier){notify('點數不夠喔！'); return;}
+  openModal('<div class="me">'+(tier===20?'🎰':'🏆')+'</div><h2>'+tier+' 點特殊大抽獎</h2><p>【'+kid.name+'】累積點數達成！點擊下方精靈球抽取對應獎勵：</p>'
+    +'<div class="gacha-ball'+(tier===50?' blue':'')+'" id="gBall" onclick="spinGacha('+ki+','+tier+')">'+(tier===20?'⭐':'💎')+'</div>'
+    +'<div id="prizeArea"></div><button class="mbtn secondary" onclick="closeModal()">先留著點數</button>');
+}
+function spinGacha(ki,tier){
+  const ball=document.getElementById('gBall'); if(!ball || ball.dataset.spun) return;
+  ball.dataset.spun='1'; ball.classList.add('spinning');
+  setTimeout(()=>{
+    const kid=state.kids[ki]; kid.totalPts-=tier;
+    let prizeStr='', winMoney;
+    if(tier===20){ winMoney=rndMultipleOf5(5,50); prizeStr='💰 獲得現金零用金： '+winMoney+' 元！'; }
+    else{ winMoney=rndMultipleOf5(50,100); prizeStr='🥤 獲得大獎：現金 '+winMoney+' 元 + 飲料 1 杯！'; }
+    if(!kid.gachaLog) kid.gachaLog=[];
+    kid.gachaLog.unshift({tier,amount:winMoney,date:todayKey(),time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});
+    addHist(kid,'🎰 兌換了 '+tier+' 點大型抽獎，獲得 '+winMoney+' 元',-tier); saveState();
+    ball.style.display='none'; AudioEngine.playMilestone();
+    document.getElementById('prizeArea').innerHTML='<div class="prize-reveal">'+prizeStr+'</div><p style="font-size:.75rem;color:var(--soft)">已扣除 '+tier+' 點，剩餘點數：'+kid.totalPts+' 點</p><button class="mbtn primary" onclick="closeModal()">驚喜收下！</button>';
+    renderAll();
+  },1200);
+}
+/* 連續2天零缺失 → 額外扭蛋 100/150/200 */
+function openStreakGacha(ki){
+  const kid=state.kids[ki]; if(!kid.streakBonusAvailable){ return; }
+  openModal('<div class="me">🌟</div><h2>連續零缺失獎勵扭蛋！</h2><p>【'+kid.name+'】連續 2 天沒有任何缺失記錄，太棒了！點擊精靈球抽取 100~200 元獎勵金：</p>'
+    +'<div class="gacha-ball pink" id="gBallS" onclick="spinStreakGacha('+ki+')">🎊</div><div id="prizeAreaS"></div><button class="mbtn secondary" onclick="closeModal()">先留著</button>');
+}
+function spinStreakGacha(ki){
+  const ball=document.getElementById('gBallS'); if(!ball || ball.dataset.spun) return;
+  ball.dataset.spun='1'; ball.classList.add('spinning');
+  setTimeout(()=>{
+    const kid=state.kids[ki]; const choices=[100,150,200]; const amt=choices[Math.floor(Math.random()*3)];
+    kid.streakBonusAvailable=false; kid.noDefectStreak=0;
+    if(!kid.gachaLog) kid.gachaLog=[];
+    kid.gachaLog.unshift({tier:'streak',amount:amt,date:todayKey(),time:new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})});
+    addHist(kid,'🌟 連續零缺失獎勵扭蛋，獲得 '+amt+' 元',0); saveState();
+    ball.style.display='none'; AudioEngine.playMilestone();
+    document.getElementById('prizeAreaS').innerHTML='<div class="prize-reveal">🎉 獲得 '+amt+' 元獎勵金！</div><button class="mbtn primary" onclick="closeModal()">太棒了！</button>';
+    renderAll();
+  },1200);
+}
+/* 每天檢查一次是否延續零缺失連續紀錄 */
+function updateStreaks(){
+  const today=todayKey();
+  state.kids.forEach(kid=>{
+    if(kid.lastStreakCheckDate===today) return;
+    const yKey=dateKeyMinus(1);
+    if(kid.checks[yKey] || kid.penalties[yKey] || kid.specChecks[yKey]){
+      const yPen=kid.penalties[yKey]||{};
+      const hadMistake=Object.values(yPen).some(v=>v);
+      if(hadMistake){ kid.noDefectStreak=0; }
+      else{ kid.noDefectStreak=(kid.noDefectStreak||0)+1; }
+      if(kid.noDefectStreak>=2){ kid.streakBonusAvailable=true; }
+    }
+    kid.lastStreakCheckDate=today;
+  });
+  saveState();
+}
+
+/* ════ 手動加減點數 ════ */
+function openManualAdj(ki){
+  openModal('<div class="me">🔧</div><h2>手動調整點數</h2><p>可用於老師/家長臨時加分或扣分，請輸入原因與點數（正數加分，負數扣分）</p>'
+    +'<input class="add-inp" id="manReason" placeholder="調整原因，例如：主動幫忙照顧弟妹" style="width:100%;margin-bottom:8px;">'
+    +'<input class="add-inp" id="manPts" type="number" placeholder="點數，例如 2 或 -2" style="width:100%;margin-bottom:8px;">'
+    +'<button class="mbtn primary" onclick="doManualAdj('+ki+')">送出調整</button><button class="mbtn secondary" onclick="closeModal()">取消</button>');
+}
+function doManualAdj(ki){
+  const reason=(document.getElementById('manReason').value||'').trim();
+  const pts=parseInt(document.getElementById('manPts').value,10);
+  if(!reason || isNaN(pts) || pts===0){ notify('請完整填寫原因與非0點數'); return; }
+  const kid=state.kids[ki]; kid.totalPts+=pts;
+  addHist(kid,(pts>0?'🔧 手動加分：':'🔧 手動扣分：')+reason,pts);
+  if(pts>0) checkPointsMilestone(kid);
+  saveState(); renderAll(); closeModal();
+}
+
+/* ════ 呼喊小孩滿版警報（未在響鈴前取消 → 扣2點）════ */
+let yellTimer=null; let yellCount=10; let yellTimeUp=false;
+function triggerYellAlert(){
+  AudioEngine.init(); yellCount=10; yellTimeUp=false; document.getElementById('yellCountdown').textContent=yellCount;
+  document.getElementById('fullYellOverlay').style.display='flex';
+  clearInterval(yellTimer);
+  yellTimer=setInterval(()=>{
+    yellCount--; document.getElementById('yellCountdown').textContent=yellCount;
+    if(yellCount<=0){ clearInterval(yellTimer); yellTimeUp=true; AudioEngine.playAlarm(); AudioEngine.startSiren(); }
+  },1000);
+}
+function cancelYellAlert(){
+  clearInterval(yellTimer); AudioEngine.stopSiren();
+  document.getElementById('fullYellOverlay').style.display='none';
+  if(yellTimeUp){
+    const kid=state.kids[state.activeKid];
+    kid.totalPts-=2; addHist(kid,'📢 呼喊警報鈴聲響起才回應',-2);
+    saveState(); renderAll();
+    setTimeout(()=>{ openModal('<div class="me">📢</div><h2>鈴聲已響起</h2><p>因為鈴聲響起後才回應，已扣除 2 點。下次請提早回應喔！</p><button class="mbtn primary" onclick="closeModal()">我知道了</button>'); },200);
+  }
+  yellTimeUp=false;
+}
+
+/* ════ 日曆與功課紀錄（清單打勾＋家長評分）════ */
+let calKi=0;
+function openCalendar(ki){ calKi=(ki!==undefined?ki:state.activeKid); calCursor=new Date(); renderCalendarModal(); }
+function migrateHW(kid,key){
+  if(!kid.homework) kid.homework={};
+  let hw=kid.homework[key];
+  if(typeof hw==='string'){ hw={items: hw? [{id:'hi'+Date.now(),text:hw,done:false}] : [], awarded:null}; kid.homework[key]=hw; }
+  if(!hw){ hw={items:[],awarded:null}; kid.homework[key]=hw; }
+  if(!hw.items) hw.items=[];
+  return hw;
+}
+function renderCalendarModal(){
+  const kid=state.kids[calKi];
+  const y=calCursor.getFullYear(), m=calCursor.getMonth();
+  const first=new Date(y,m,1); const startDow=first.getDay(); const daysInMonth=new Date(y,m+1,0).getDate();
+  const dowNames=['日','一','二','三','四','五','六'];
+  let grid='<div class="cal-grid">'+dowNames.map(d=>'<div class="cal-dow">'+d+'</div>').join('');
+  for(let i=0;i<startDow;i++) grid+='<div class="cal-day empty"></div>';
+  const today=todayKey();
+  for(let d=1;d<=daysInMonth;d++){
+    const key=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const hw=kid.homework?kid.homework[key]:null;
+    const hasNote=!!(hw && ((typeof hw==='string' && hw) || (hw.items && hw.items.length)));
+    const isToday=key===today;
+    grid+='<button class="cal-day'+(isToday?' today':'')+(hasNote?' has-note':'')+'" onclick="openHomeworkDay(\''+key+'\')">'+d+'</button>';
+  }
+  grid+='</div>';
+  openModal('<div class="me">📅</div><h2>'+kid.avatar+' '+kid.name+' 的功課記事月曆</h2>'
+    +'<div class="cal-nav"><button onclick="calMonth(-1)">← 上月</button><span>'+y+' 年 '+(m+1)+' 月</span><button onclick="calMonth(1)">下月 →</button></div>'
+    +grid+'<p style="font-size:.7rem;margin-top:8px">紅點代表當天已登記作業項目，點擊任一天可查看、勾選或評分。</p>'
+    +'<button class="mbtn secondary" onclick="closeModal()">關閉</button>');
+}
+function calMonth(delta){ calCursor.setMonth(calCursor.getMonth()+delta); renderCalendarModal(); }
+function todayLabel(){ const now=new Date(); const wd=['日','一','二','三','四','五','六']; return (now.getMonth()+1)+'/'+now.getDate()+'('+wd[now.getDay()]+')'; }
+function openHomeworkDay(key){
+  const kid=state.kids[calKi]; const hw=migrateHW(kid,key);
+  const total=hw.items.length; const doneCount=hw.items.filter(i=>i.done).length;
+  const itemRows=hw.items.map(it=>'<div class="task-row"><label class="check-wrap"><input type="checkbox" onchange="toggleHwItem(\''+key+'\',\''+it.id+'\',this.checked)" '+(it.done?'checked':'')+'><div class="checkmark"></div></label><span class="task-label" style="'+(it.done?'text-decoration:line-through;color:#CBD5E0':'')+'">'+escH(it.text)+'</span><button class="del-btn" onclick="delHwItem(\''+key+'\',\''+it.id+'\')">✕</button></div>').join('');
+  const awarded=hw.awarded;
+  const awardedInfo=awarded ? '<p style="color:#27ae60;font-weight:700;font-size:.78rem">✔️ 這天已評分：'+(awarded.pts>=0?'+':'')+awarded.pts+' 點（'+escH(awarded.note||'')+'）</p>' : '<p style="font-size:.72rem;color:var(--soft)">尚未評分</p>';
+  openModal('<div class="me">📝</div><h2>'+key+' 功課清單</h2>'
+    +'<div class="add-row" style="border:none;padding:0 0 8px"><input id="hwNewItem" class="add-inp" placeholder="新增一項功課，例如：國語習作P.12"><button class="add-btn" onclick="addHwItem(\''+key+'\')">＋</button></div>'
+    +(total===0?'<p style="font-size:.78rem;color:var(--soft);margin-bottom:8px">目前尚無項目，請先新增當天功課清單。</p>':'<div class="section-card" style="margin-bottom:10px">'+itemRows+'</div>')
+    +'<p style="font-size:.76rem;margin-bottom:6px">完成進度：'+doneCount+' / '+total+' 項</p>'
+    +awardedInfo
+    +'<p style="font-size:.72rem;color:var(--soft);margin:8px 0 4px;text-align:left">家長評分（依完成度與態度自行判斷給分）：</p>'
+    +'<div class="quiz-opts" style="grid-template-columns:repeat(3,1fr)">'
+    +'<button class="quiz-opt" onclick="awardHw(\''+key+'\',0,\'未達標準\')">不加分</button>'
+    +'<button class="quiz-opt" onclick="awardHw(\''+key+'\',1,\'完成部分／稍欠專注\')">+1</button>'
+    +'<button class="quiz-opt" onclick="awardHw(\''+key+'\',2,\'大致完成尚可\')">+2</button>'
+    +'<button class="quiz-opt" onclick="awardHw(\''+key+'\',3,\'全部完成且認真\')">+3 全勾完</button>'
+    +'<button class="quiz-opt" onclick="awardHw(\''+key+'\',-1,\'態度不佳或應付了事\')">-1</button>'
+    +'<button class="quiz-opt" onclick="awardHw(\''+key+'\',-2,\'嚴重敷衍/未完成\')">-2</button>'
+    +'</div>'
+    +'<button class="mbtn secondary" onclick="renderCalendarModal()">← 返回月曆</button>');
+}
+function addHwItem(key){
+  const kid=state.kids[calKi]; const hw=migrateHW(kid,key);
+  const v=(document.getElementById('hwNewItem').value||'').trim(); if(!v) return;
+  hw.items.push({id:'hi'+Date.now(),text:v,done:false});
+  saveState(); openHomeworkDay(key);
+}
+function addHwItemInline(ki,key){
+  calKi=ki; const kid=state.kids[ki]; const hw=migrateHW(kid,key);
+  const inp=document.getElementById('hwQuick'+ki); const v=(inp?.value||'').trim(); if(!v) return;
+  hw.items.push({id:'hi'+Date.now(),text:v,done:false});
+  saveState(); renderAll();
+}
+function delHwItem(key,id){
+  const kid=state.kids[calKi]; const hw=migrateHW(kid,key);
+  hw.items=hw.items.filter(i=>i.id!==id); saveState(); openHomeworkDay(key);
+}
+function setHwItemDone(key,id,checked){
+  const kid=state.kids[calKi]; const hw=migrateHW(kid,key);
+  const it=hw.items.find(i=>i.id===id); if(it) it.done=checked; saveState();
+}
+function toggleHwItem(key,id,checked){ setHwItemDone(key,id,checked); openHomeworkDay(key); }
+function toggleHwItemInline(ki,key,id,checked){ calKi=ki; setHwItemDone(key,id,checked); renderAll(); }
+function awardHw(key,pts,note){
+  const kid=state.kids[calKi]; const hw=migrateHW(kid,key);
+  if(hw.awarded){ kid.totalPts-=hw.awarded.pts; }
+  hw.awarded={pts,note};
+  kid.totalPts+=pts;
+  addHist(kid,'📝 '+key+' 功課評分：'+note,pts);
+  if(pts>0) checkPointsMilestone(kid);
+  saveState(); openHomeworkDay(key); renderAll();
+}
+
+/* ════ 家長後台控制中心 ════ */
+function openParentControl(){
+  let luckCards=state.luckCardsPool || INITIAL_LUCK_CARDS;
+  let punishCards=state.punishCardsPool || INITIAL_PUNISH_CARDS;
+  let qbank=state.globalQBank || QBANK;
+  let html='<div class="me">⚙️</div><h2>卡片與題庫管理中心</h2>'
+    +'<div class="inner-nav" style="margin-top:10px;flex-wrap:wrap">'
+    +'<button class="inner-tab active" id="tbL" onclick="switchMgrTab(\'luck\')">命運卡 ('+luckCards.length+')</button>'
+    +'<button class="inner-tab" id="tbP" onclick="switchMgrTab(\'punish\')">懲罰卡 ('+punishCards.length+')</button>'
+    +'<button class="inner-tab" id="tbT" onclick="switchMgrTab(\'task\')">加分項目</button>'
+    +'<button class="inner-tab" id="tbG" onclick="switchMgrTab(\'pen\')">缺失項目</button>'
+    +'<button class="inner-tab" id="tbS" onclick="switchMgrTab(\'spec\')">特別獎勵</button>'
+    +'<button class="inner-tab" id="tbQ" onclick="switchMgrTab(\'qbank\')">智慧題庫 ('+qbank.length+')</button>'
+    +'</div>'
+    +'<div id="mgrTabContent" style="max-height:280px;overflow-y:auto;margin-bottom:12px;border:1px solid #edf2f7;padding:8px;border-radius:8px;"></div>'
+    +'<button class="mbtn primary" onclick="closeModal();renderAll()">儲存並關閉</button>';
+  openModal(html); switchMgrTab('luck');
+}
+function switchMgrTab(type){
+  ['L','P','T','G','S','Q'].forEach(k=>{ const el=document.getElementById('tb'+k); if(el) el.classList.remove('active'); });
+  const map={luck:'tbL',punish:'tbP',task:'tbT',pen:'tbG',spec:'tbS',qbank:'tbQ'};
+  document.getElementById(map[type]).classList.add('active');
+  let co=document.getElementById('mgrTabContent');
+  const ki=state.activeKid; const kid=state.kids[ki];
+  if(type==='luck'){
+    let list=(state.luckCardsPool||[]).map(c=>'<div class="mgr-list-item"><span>'+c.icon+'</span><strong style="flex:1">'+escH(c.name)+'</strong><button class="del-btn" onclick="delPoolCard(\'luck\',\''+c.id+'\')">✕</button></div>').join('');
+    co.innerHTML='<div style="margin-bottom:8px;display:flex;gap:4px;"><input id="nlName" class="add-inp" placeholder="新增命運卡名稱"><button class="add-btn" onclick="addPoolCard(\'luck\')">＋</button></div>'+list;
+  }else if(type==='punish'){
+    let list=(state.punishCardsPool||[]).map(c=>'<div class="mgr-list-item"><span style="flex:1">'+escH(c.text)+'</span><button class="del-btn" onclick="delPoolCard(\'punish\',\''+c.id+'\')">✕</button></div>').join('');
+    co.innerHTML='<div style="margin-bottom:8px;display:flex;gap:4px;"><input id="npText" class="add-inp" placeholder="新增懲罰卡內容"><button class="add-btn red" onclick="addPoolCard(\'punish\')">＋</button></div>'+list;
+  }else if(type==='task'){
+    const allT=[...DEFAULT_TASKS,...(kid.customTasks||[])].filter(t=>!(kid.hiddenDefault||[]).includes(t.id));
+    let list=allT.map(t=>'<div class="mgr-list-item"><span>'+t.icon+'</span><span style="flex:1">'+escH(t.label)+'</span><button class="del-btn" onclick="delMgrTask(\''+t.id+'\')">✕</button></div>').join('');
+    co.innerHTML='<p style="font-size:.7rem;color:var(--soft);margin-bottom:6px;text-align:left">目前：'+kid.name+' 的加分項目（也可以在該小孩頁面直接新增）</p><div style="margin-bottom:8px;display:flex;gap:4px;"><input id="ntTask" class="add-inp" placeholder="新增加分項目"><button class="add-btn" onclick="addMgrTask()">＋</button></div>'+list;
+  }else if(type==='pen'){
+    const allP=[...DEFAULT_PENALTIES,...(kid.customPenalties||[])].filter(p=>!(kid.hiddenPenalty||[]).includes(p.id));
+    let list=allP.map(p=>'<div class="mgr-list-item"><span>'+p.icon+'</span><span style="flex:1">'+escH(p.label)+'</span><button class="del-btn" onclick="delMgrPen(\''+p.id+'\')">✕</button></div>').join('');
+    co.innerHTML='<p style="font-size:.7rem;color:var(--soft);margin-bottom:6px;text-align:left">目前：'+kid.name+' 的缺失項目</p><div style="margin-bottom:8px;display:flex;gap:4px;"><input id="npPen" class="add-inp" placeholder="新增缺失項目"><button class="add-btn red" onclick="addMgrPen()">＋</button></div>'+list;
+  }else if(type==='spec'){
+    const allS=[...DEFAULT_SPECIAL,...(kid.customSpecial||[])];
+    let list=allS.map(s=>'<div class="mgr-list-item"><span>'+s.icon+'</span><span style="flex:1">'+escH(s.label)+'（+'+s.pts+'）</span>'+(s.id.startsWith('cs')?'<button class="del-btn" onclick="delMgrSpec(\''+s.id+'\')">✕</button>':'')+'</div>').join('');
+    co.innerHTML='<p style="font-size:.7rem;color:var(--soft);margin-bottom:6px;text-align:left">目前：'+kid.name+' 的特別獎勵項目</p><div style="margin-bottom:8px;display:flex;gap:4px;"><input id="nsLabel" class="add-inp" placeholder="項目名稱"><input id="nsPts" class="add-inp" type="number" placeholder="加分" style="max-width:60px"><button class="add-btn" onclick="addMgrSpec()">＋</button></div>'+list;
+  }else if(type==='qbank'){
+    co.innerHTML='<p style="font-size:.75rem;color:var(--soft);margin-bottom:8px;text-align:left;">💡 支援單獨匯入全客製化題庫 JSON 檔案（會取代目前題庫）：</p>'
+      +'<button class="mbtn primary" style="padding:6px;font-size:.75rem;" onclick="document.getElementById(\'jsonQInput\').click()">選擇題庫 .json 檔案匯入</button>'
+      +'<input type="file" id="jsonQInput" accept=".json" style="display:none" onchange="importQuestionsJSON(event)">'
+      +'<button class="mbtn secondary" style="padding:6px;font-size:.75rem;" onclick="resetQBank()">🔄 還原為內建 100 題題庫</button>'
+      +'<div style="font-size:.72rem;color:#4a5568;margin-top:8px;text-align:left;line-height:1.4;">目前題庫總計：<strong>'+(state.globalQBank||QBANK).length+'</strong> 題。</div>';
+  }
+}
+function addPoolCard(type){
+  if(type==='luck'){
+    const val=document.getElementById('nlName').value.trim(); if(!val) return;
+    if(!state.luckCardsPool) state.luckCardsPool=[...INITIAL_LUCK_CARDS];
+    state.luckCardsPool.push({id:'lk_c_'+Date.now(),name:val,icon:'✨',pts:'自訂',desc:'自訂命運卡內容效果。'});
+  }else{
+    const val=document.getElementById('npText').value.trim(); if(!val) return;
+    if(!state.punishCardsPool) state.punishCardsPool=[...INITIAL_PUNISH_CARDS];
+    state.punishCardsPool.push({id:'pu_c_'+Date.now(),text:val});
+  }
+  saveState(); switchMgrTab(type);
+}
+function delPoolCard(type, id){
+  if(type==='luck') state.luckCardsPool=state.luckCardsPool.filter(c=>c.id!==id);
+  else state.punishCardsPool=state.punishCardsPool.filter(c=>c.id!==id);
+  saveState(); switchMgrTab(type);
+}
+function addMgrTask(){ const kid=state.kids[state.activeKid]; const v=(document.getElementById('ntTask').value||'').trim(); if(!v) return; if(!kid.customTasks) kid.customTasks=[]; kid.customTasks.push({id:'ct'+Date.now(),label:v,icon:'📌',pts:1}); saveState(); switchMgrTab('task'); }
+function delMgrTask(id){ const kid=state.kids[state.activeKid]; if(id.startsWith('ct')){ kid.customTasks=(kid.customTasks||[]).filter(t=>t.id!==id); } else { if(!kid.hiddenDefault) kid.hiddenDefault=[]; kid.hiddenDefault.push(id); } saveState(); switchMgrTab('task'); }
+function addMgrPen(){ const kid=state.kids[state.activeKid]; const v=(document.getElementById('npPen').value||'').trim(); if(!v) return; if(!kid.customPenalties) kid.customPenalties=[]; kid.customPenalties.push({id:'cp'+Date.now(),label:v,icon:'📌'}); saveState(); switchMgrTab('pen'); }
+function delMgrPen(id){ const kid=state.kids[state.activeKid]; if(id.startsWith('cp')){ kid.customPenalties=(kid.customPenalties||[]).filter(p=>p.id!==id); } else { if(!kid.hiddenPenalty) kid.hiddenPenalty=[]; kid.hiddenPenalty.push(id); } saveState(); switchMgrTab('pen'); }
+function addMgrSpec(){ const kid=state.kids[state.activeKid]; const l=(document.getElementById('nsLabel').value||'').trim(); const p=parseInt(document.getElementById('nsPts').value,10)||1; if(!l) return; if(!kid.customSpecial) kid.customSpecial=[]; kid.customSpecial.push({id:'cs'+Date.now(),label:l,icon:'🌟',pts:p,penalty:0,desc:'打勾+'+p}); saveState(); switchMgrTab('spec'); }
+function delMgrSpec(id){ const kid=state.kids[state.activeKid]; kid.customSpecial=(kid.customSpecial||[]).filter(s=>s.id!==id); saveState(); switchMgrTab('spec'); }
+function resetQBank(){ state.globalQBank=[...QBANK]; saveState(); switchMgrTab('qbank'); }
+function importQuestionsJSON(ev){
+  const file=ev.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const imported=JSON.parse(e.target.result);
+      const arr = imported.questions || imported;
+      if(!Array.isArray(arr)) throw new Error('題庫格式必須為陣列');
+      state.globalQBank = arr; saveState();
+      notify('🎉 獨立新題庫匯入完成！總計共 '+arr.length+' 題。');
+      switchMgrTab('qbank');
+    }catch(err){ notify('匯入題庫出錯：'+err.message); }
+  }; reader.readAsText(file);
+}
+
+/* ════ 基礎增刪與常規渲染 ════ */
+function addCTask(ki){const inp=document.getElementById('ctInp'+ki); const l=(inp?.value||'').trim(); if(!l)return; const kid=state.kids[ki]; if(!kid.customTasks)kid.customTasks=[]; kid.customTasks.push({id:'ct'+Date.now(),label:l,icon:'📌',pts:1}); if(inp)inp.value=''; saveState(); renderAll();}
+function delCTask(ki,id){const kid=state.kids[ki]; if(id.startsWith('ct')) kid.customTasks=(kid.customTasks||[]).filter(t=>t.id!==id); else { if(!kid.hiddenDefault) kid.hiddenDefault=[]; kid.hiddenDefault.push(id); } saveState(); renderAll();}
+function addCPen(ki){const inp=document.getElementById('cpInp'+ki); const l=(inp?.value||'').trim(); if(!l)return; const kid=state.kids[ki]; if(!kid.customPenalties)kid.customPenalties=[]; kid.customPenalties.push({id:'cp'+Date.now(),label:l,icon:'📌'}); if(inp)inp.value=''; saveState(); renderAll();}
+function delCPen(ki,id){const kid=state.kids[ki]; if(id.startsWith('cp')) kid.customPenalties=(kid.customPenalties||[]).filter(p=>p.id!==id); else { if(!kid.hiddenPenalty) kid.hiddenPenalty=[]; kid.hiddenPenalty.push(id); } saveState(); renderAll();}
+function openDiff(ki){const kid=state.kids[ki]; const cur=kid.difficulty||2; openModal('<h2>選擇學習挑戰難度</h2><div style="margin-top:10px">'+DIFF_LABELS.map(x=>'<button class="lvl-btn'+(cur===x.v?' active':'')+'" onclick="setDiff('+ki+','+x.v+')">'+x.l+' <span style="font-size:.7rem;opacity:.8">('+x.d+')</span></button>').join('')+'</div><button class="mbtn primary" onclick="closeModal()">關閉</button>');}
+function setDiff(ki,v){state.kids[ki].difficulty=v; saveState(); openDiff(ki); renderAll();}
+function resetToday(){
+  openModal('<div class="me">🔄</div><h2>重置今日勾選</h2><p>會清除「今天」所有加分/缺失/特別項目的勾選狀態，讓今天可以重新開始勾選。<br><strong>已經累積的總點數不會被扣掉</strong>，只是把勾勾清空而已。</p>'
+    +'<button class="mbtn danger" onclick="doResetToday()">確定重置今天</button><button class="mbtn secondary" onclick="closeModal()">取消</button>');
+}
+function doResetToday(){ const dk=todayKey(); state.kids.forEach(k=>{k.checks[dk]={}; k.specChecks[dk]={}; k.penalties[dk]={}; k.todaysMistakeCount=0;}); saveState(); closeModal(); renderAll(); }
+function switchKid(i){state.activeKid=i; saveState(); renderAll();}
+function switchTab(ki,t){state.kids[ki].activeTab=t; saveState(); renderAll();}
+
+function renderAll(){
+  updateStreaks();
+  updateLastSave(); const now=new Date(); const wd=['日','一','二','三','四','五','六'];
+  document.getElementById('headerDate').textContent=now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日（週'+wd[now.getDay()]+'）';
+  document.getElementById('dateDisplay').textContent=now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0');
+
+  document.getElementById('kidTabs').innerHTML=state.kids.map((kid,i)=>{
+    const pts=kid.totalPts; let cls='tab-pts';
+    if(pts>=50) cls+=' m50'; else if(pts>=20) cls+=' m20'; else if(pts>0) cls+=' pos'; else if(pts<0) cls+=' neg';
+    return '<button class="tab-btn'+(state.activeKid===i?' active':'')+'" onclick="switchKid('+i+')">'
+      +'<span class="tab-kid-name">'+kid.avatar+' '+kid.name+'</span>'
+      +'<span class="'+cls+'">'+(pts>0?'+':'')+pts+' 點</span>'
+      +'</button>';
+  }).join('');
+
+  document.getElementById('kidPages').innerHTML=state.kids.map((kid,i)=>buildPage(kid,i,state.activeKid===i)).join('');
+  document.querySelectorAll('.task-check').forEach(cb=>cb.addEventListener('change',function(){toggleTask(+this.dataset.ki,this.dataset.id,this.checked);}));
+  document.querySelectorAll('.spec-check').forEach(cb=>cb.addEventListener('change',function(){toggleSpecial(+this.dataset.ki,this.dataset.id,this.checked);}));
+  document.querySelectorAll('.pen-check').forEach(cb=>cb.addEventListener('change',function(){togglePenalty(+this.dataset.ki,this.dataset.id,this.checked);}));
+}
+
+function buildCardHTML(card){
+  return '<div class="pkcard luck"><div class="pk-shine"></div>'
+    +'<div class="pk-top"><div class="pk-type">✨ 命運降臨卡 · LUCKY</div>'
+    +'<div class="pk-title">'+escH(card.name)+'</div>'
+    +'<div class="pk-pts-badge">'+escH(card.pts)+'</div>'
+    +'<div class="pk-art">'+card.icon+'</div></div>'
+    +'<div class="pk-divider"></div>'
+    +'<div class="pk-desc">'+escH(card.desc)+'</div>'
+    +'<div class="pk-footer">LUCKY CARD · ⭐ 激勵表系統</div></div>';
+}
+function buildPunishCardHTML(text){
+  return '<div class="pkcard punish"><div class="pk-shine"></div>'
+    +'<div class="pk-top"><div class="pk-type">🃏 懲罰強制執行卡</div>'
+    +'<div class="pk-title">'+escH(text)+'</div>'
+    +'<div class="pk-pts-badge">🚨 滿5次缺失</div>'
+    +'<div class="pk-art">⚡</div></div>'
+    +'<div class="pk-divider"></div>'
+    +'<div class="pk-desc">今日行為缺失已累計達 5 次，請立刻誠實執行此項懲罰任務，完成後請找家長核銷。</div>'
+    +'<div class="pk-footer">PUNISH CARD · ⭐ 激勵表系統</div></div>';
+}
+
+function buildPage(kid,ki,isActive){
+  const dk=todayKey(); const checks=kid.checks[dk]||{}; const specChecks=kid.specChecks[dk]||{}; const penChecks=kid.penalties[dk]||{};
+  const pts=kid.totalPts; const tab=kid.activeTab||0;
+  const allT=[...DEFAULT_TASKS,...(kid.customTasks||[])].filter(t=>!(kid.hiddenDefault||[]).includes(t.id));
+  const allP=[...DEFAULT_PENALTIES,...(kid.customPenalties||[])].filter(p=>!(kid.hiddenPenalty||[]).includes(p.id));
+  const allS=[...DEFAULT_SPECIAL,...(kid.customSpecial||[])];
+
+  let mileHTML='';
+  if(pts>=50) mileHTML+='<div class="milestone-banner m50" onclick="openGacha('+ki+',50)"><span class="m-icon">🏆</span><div class="m-text">恭喜滿 50 點！可抽大獎勵！<div class="m-sub">點擊抽取 50~100元(5元倍數) + 飲料1杯</div></div><button class="m-btn">抽獎 🎰</button></div>';
+  else if(pts>=20) mileHTML+='<div class="milestone-banner m20" onclick="openGacha('+ki+',20)"><span class="m-icon">🎰</span><div class="m-text">恭喜滿 20 點！解鎖零用金扭蛋！<div class="m-sub">點擊隨機抽取 5~50 元(5元倍數)零用金</div></div><button class="m-btn">抽獎 🎰</button></div>';
+  if(kid.streakBonusAvailable) mileHTML+='<div class="milestone-banner streak" onclick="openStreakGacha('+ki+')"><span class="m-icon">🌟</span><div class="m-text">連續2天零缺失！額外獎勵扭蛋已解鎖<div class="m-sub">點擊抽取 100~200 元獎勵金</div></div><button class="m-btn">抽獎 🎊</button></div>';
+
+  const mCount = kid.todaysMistakeCount || 0;
+  const streakH = mCount > 0 ? '<div class="streak-info">⚠️ 今日已被記缺失：'+mCount+' 次（滿 3 次會提醒警告，滿 5 次會自動觸發強制懲罰任務卡！）</div>' : '';
+  const boxCount = (kid.treasureBox||[]).length; const pqCount = (kid.punishQueue||[]).length;
+
+  const innerNav='<div class="inner-nav">'
+    +'<button class="inner-tab'+(tab===0?' active':'')+'" onclick="switchTab('+ki+',0)">✅ 加分</button>'
+    +'<button class="inner-tab'+(tab===1?' active':'')+'" onclick="switchTab('+ki+',1)">⭐ 特別</button>'
+    +'<button class="inner-tab'+(tab===2?' active':'')+'" onclick="switchTab('+ki+',2)">⚠️ 缺失</button>'
+    +'<button class="inner-tab'+(tab===3?' active':'')+'" onclick="switchTab('+ki+',3)">🎁 寶盒 ('+boxCount+')</button>'
+    +'<button class="inner-tab'+(tab===4?' active':'')+'" onclick="switchTab('+ki+',4)">🃏 懲罰庫 ('+pqCount+')</button>'
+    +'<button class="inner-tab'+(tab===5?' active':'')+'" onclick="switchTab('+ki+',5)">📋 歷史</button>'
+    +'<button class="inner-tab'+(tab===6?' active':'')+'" onclick="switchTab('+ki+',6)">🏆 領獎</button>'
+    +'</div>';
+
+  const taskRows=allT.map(t=>{ const done=!!checks[t.id];
+    return '<div class="task-row"><span>'+t.icon+'</span><span class="task-label" style="'+(done?'text-decoration:line-through;color:#CBD5E0':'')+'">'+escH(t.label)+'</span>'
+      +'<span class="task-pts-lbl" style="color:'+(done?'#27ae60':'#718096')+'">'+(done?'+'+t.pts:'')+'</span>'
+      +'<button class="del-btn" onclick="delCTask('+ki+',\''+t.id+'\')">✕</button>'
+      +'<label class="check-wrap"><input type="checkbox" class="task-check" data-ki="'+ki+'" data-id="'+t.id+'" '+(done?'checked':'')+'><div class="checkmark"></div></label></div>';
+  }).join('');
+  const sec0='<div class="section-card"><div class="section-head">✅ 常規加分項目</div>'+taskRows+'<div class="add-row"><input id="ctInp'+ki+'" class="add-inp" placeholder="新增自訂加分任務..."><button class="add-btn" onclick="addCTask('+ki+')">＋</button></div></div>';
+
+  const specRows=allS.map(s=>{ const done=!!specChecks[s.id];
+    return '<div class="task-row"><span>'+s.icon+'</span><div style="flex:1"><div class="task-label" style="'+(done?'text-decoration:line-through;color:#CBD5E0':'')+'">'+escH(s.label)+'</div><div style="font-size:.68rem;color:var(--soft)">'+(s.desc||('打勾+'+s.pts))+'</div></div>'
+      +'<label class="check-wrap"><input type="checkbox" class="spec-check" data-ki="'+ki+'" data-id="'+s.id+'" '+(done?'checked':'')+'><div class="checkmark"></div></label></div>';
+  }).join('');
+  const sec1='<div class="section-card"><div class="section-head">⭐ 特別表現大獎勵</div>'+specRows+'</div>';
+
+  const penRows=allP.map(p=>{ const hit=!!penChecks[p.id];
+    return '<div class="task-row"><span>'+p.icon+'</span><span class="task-label" style="'+(hit?'color:var(--coral);font-weight:700':'')+'">'+escH(p.label)+'</span>'
+      +'<button class="del-btn" onclick="delCPen('+ki+',\''+p.id+'\')">✕</button>'
+      +'<label class="check-wrap pen-wrap"><input type="checkbox" class="pen-check" data-ki="'+ki+'" data-id="'+p.id+'" '+(hit?'checked':'')+'><div class="checkmark"></div></label></div>';
+  }).join('');
+  const sec2=streakH+'<div class="section-card"><div class="section-head">⚠️ 行為表現缺失扣分區</div>'+penRows+'<div class="add-row"><input id="cpInp'+ki+'" class="add-inp" placeholder="新增自訂缺失..."><button class="add-btn red" onclick="addCPen('+ki+')">＋</button></div></div>';
+
+  const box=kid.treasureBox||[];
+  const boxContent=box.length===0?'<div class="empty-chest"><div>📭</div>個人隨身寶盒目前空空如也</div>'
+    :'<div class="treasure-grid">'+box.map(c=>{
+      if(c.kind==='quiz'){
+        return '<div class="ti quiz-ti"><div class="ti-body"><div class="ti-name">'+c.icon+' '+escH(c.name)+'</div><div class="ti-desc">'+escH(c.desc)+'</div></div><button class="ti-use" onclick="useCard('+ki+',\''+c.uid+'\')">📝 馬上作答</button></div>';
+      }
+      return '<div class="ti luck-ti"><div class="ti-body"><div class="ti-name">'+c.icon+' '+escH(c.name)+'</div><div class="ti-desc" style="font-size:.68rem">'+escH(c.desc)+'</div></div><button class="ti-use" onclick="useCard('+ki+',\''+c.uid+'\')">🃏 立刻宣告使用</button></div>';
+    }).join('')+'</div>';
+  const sec3='<div class="section-card"><div class="section-head">🎁 命運卡與智慧卡隨身寶盒</div>'+boxContent+'</div>';
+
+  const pq=kid.punishQueue||[];
+  const pqContent=pq.length===0?'<div class="empty-pq"><div>😇</div>太棒了！目前沒有任何未執行的懲罰</div>'
+    :pq.map(p=>'<div class="pcard-item"><div class="pi-body"><div class="pi-title">'+escH(p.text)+'</div><div class="pi-sub">'+p.date+' '+p.time+' 分配</div></div><button class="pcard-done-btn" onclick="donePunish('+ki+',\''+p.uid+'\')">✅ 家長點擊核銷</button></div>').join('');
+  const sec4='<div class="section-card"><div class="section-head">🃏 未完成懲罰保管處</div>'+pqContent+'</div>';
+
+  const histHTML=kid.history.length===0?'<div style="padding:20px;text-align:center;color:var(--soft);">尚無任何歷史變動數據</div>'
+    :kid.history.map(h=>'<div class="hist-item"><span class="h-pts '+(h.pts>0?'pos':(h.pts<0?'neg':''))+'">'+(h.pts!==0?(h.pts>0?'+':'')+h.pts:'·')+'</span><div style="flex:1"><div>'+escH(h.label)+'</div><div class="h-meta">'+h.date+' '+h.time+'</div></div><button class="del-btn" onclick="delHistItem('+ki+',\''+h.id+'\')" title="只刪除這筆紀錄，不影響點數">✕</button></div>').join('');
+  const sec5='<div class="section-card"><div class="section-head">📋 歷史行為事件簿<span class="s-badge bb">點右側✕可單筆刪除</span></div>'+histHTML+'</div>';
+
+  const glog=kid.gachaLog||[];
+  const glogHTML=glog.length===0?'<div style="padding:20px;text-align:center;color:var(--soft);">尚無任何抽獎領取紀錄</div>'
+    :glog.map((g,gi)=>'<div class="hist-item"><span class="h-pts pos">🎁</span><div style="flex:1">'+(g.tier==='streak'?'連續零缺失獎勵':(g.tier+' 點扭蛋'))+'：獲得 '+g.amount+' 元<div class="h-meta">'+g.date+' '+g.time+'</div></div><button class="del-btn" onclick="delGachaItem('+ki+','+gi+')">✕</button></div>').join('');
+  const sec6='<div class="section-card"><div class="section-head">🏆 累計抽獎領取紀錄</div>'+glogHTML+'</div>';
+
+  const hw=migrateHW(kid,dk);
+  const hwDone=hw.items.filter(i=>i.done).length; const hwTotal=hw.items.length;
+  const hwRows=hw.items.map(it=>'<div class="task-row"><label class="check-wrap"><input type="checkbox" onchange="toggleHwItemInline('+ki+',\''+dk+'\',\''+it.id+'\',this.checked)" '+(it.done?'checked':'')+'><div class="checkmark"></div></label><span class="task-label" style="'+(it.done?'text-decoration:line-through;color:#CBD5E0':'')+'">'+escH(it.text)+'</span></div>').join('');
+  const hwAwardBadge = hw.awarded ? '<span class="s-badge '+(hw.awarded.pts>=0?'bg':'br')+'">今日已評分 '+(hw.awarded.pts>=0?'+':'')+hw.awarded.pts+'</span>' : (hwTotal>0?'<span class="s-badge by">'+hwDone+'/'+hwTotal+' 完成</span>':'');
+  const secHW='<div class="section-card"><div class="section-head">📋 今日功課清單（'+todayLabel()+'）'+hwAwardBadge+'</div>'
+    +(hwTotal===0?'<div style="padding:14px;text-align:center;color:var(--soft);font-size:.82rem">今天還沒有登記功課項目</div>':hwRows)
+    +'<div class="add-row"><input id="hwQuick'+ki+'" class="add-inp" placeholder="輸入今天的功課項目..."><button class="add-btn" onclick="addHwItemInline('+ki+',\''+dk+'\')">＋</button></div>'
+    +'<div style="padding:8px 12px"><button class="mbtn secondary" style="margin-top:0" onclick="openCalendar('+ki+')">📅 查看月曆／幫今天評分</button></div></div>';
+
+  const secs=[sec0,sec1,sec2,sec3,sec4,sec5,sec6];
+  return '<div class="page'+(isActive?' active':'')+'"><div class="reset-bar"><button class="reset-btn" onclick="resetToday()">🔄 重置今日勾選</button></div>'
+    +mileHTML
+    +'<div class="pts-summary">'
+    +'<div class="kid-header-row"><div class="kid-name-lg">'+kid.avatar+' '+kid.name+'</div><div class="kid-pts-lg">'+(pts>=0?'+':'')+pts+'<span style="font-size:1rem;font-weight:700"> 點</span></div></div>'
+    +'<div class="util-chip-row">'
+      +'<button class="util-chip" onclick="openDiff('+ki+')">🎯 學習難度</button>'
+      +'<button class="util-chip" onclick="openManualAdj('+ki+')">🔧 自訂加減分</button>'
+    +'</div>'
+    +'<div class="quick-adj-row">'
+      +[-5,-3,-1,1,3,5].map(v=>'<button class="quick-adj-btn '+(v>0?'plus':'minus')+'" onclick="quickAdj('+ki+','+v+')">'+(v>0?'+':'')+v+'</button>').join('')
+    +'</div>'
+    +'</div>'
+    +secHW
+    +innerNav+secs[tab]+'</div>';
+}
+
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function openModal(html){document.getElementById('modalContent').innerHTML=html; document.getElementById('modalOverlay').style.display='flex';}
+function notify(msg){ openModal('<div class="me">💬</div><p style="margin-top:4px">'+escH(msg)+'</p><button class="mbtn primary" onclick="closeModal()">知道了</button>'); }
+function closeModal(){document.getElementById('modalOverlay').style.display='none';}
+function handleOvClick(e){if(e.target===document.getElementById('modalOverlay')) closeModal();}
+function updateLastSave(){const el=document.getElementById('lastSaveTime'); const t=localStorage.getItem('kidsApp_lastSave'); el.textContent=t?'備份時間：'+t:'尚未進行備份';}
+function exportData(){ const data={version:7,state}; const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='全能激勵表儲存點_'+state.kids.map(k=>k.name).join('_')+'.json'; a.click(); localStorage.setItem('kidsApp_lastSave',new Date().toLocaleString('zh-TW')); updateLastSave(); notify('備份成功導出，檔案已存到你手機/電腦的「下載」資料夾。');}
+function importData(ev){ const file=ev.target.files[0]; if(!file)return; const r=new FileReader(); r.onload=e=>{try{const data=JSON.parse(e.target.result); if(!data.state) throw new Error('檔案毀損或非正常備份檔'); state=data.state; saveState(); renderAll(); notify('🔮 資料成功還原至最新時間點！');}catch(err){notify('無法讀取該檔案：'+err.message);} ev.target.value='';}; r.readAsText(file);}
+function confirmReset(){
+  openModal('<div class="me">🗑️</div><h2>警告：清除全部資料</h2><p>這將會<strong style="color:var(--coral)">永久清除所有小孩的點數、勾選記錄、卡片與題庫設定</strong>，且無法復原！建議先按「⬇️ 備份導出」存一份 json 檔案再繼續。</p>'
+    +'<button class="mbtn danger" onclick="doFactoryReset()">我了解，確定全部清除</button><button class="mbtn secondary" onclick="closeModal()">取消，先不要</button>');
+}
+function doFactoryReset(){ localStorage.removeItem(SV); location.reload(); }
+
+/* ════ 啟動生命週期 ════ */
+(()=>{
+  const bg=document.getElementById('starBg'); ['⭐','✨','🎈','🎁','🏆','🌈'].forEach(e=>{const s=document.createElement('div'); s.className='star'; s.textContent=e; s.style.left=Math.random()*100+'%'; s.style.animationDuration=(10+Math.random()*10)+'s'; bg.appendChild(s);});
+  setupKidCountUI();
+  const saved=ld(SV, null);
+  if(saved && saved.kids){
+    state=saved;
+    if(!state.luckCardsPool) state.luckCardsPool = [...INITIAL_LUCK_CARDS];
+    if(!state.punishCardsPool) state.punishCardsPool = [...INITIAL_PUNISH_CARDS];
+    if(!state.globalQBank) state.globalQBank = [...QBANK];
+    state.kids.forEach(k => {
+      if(k.todaysMistakeCount===undefined) k.todaysMistakeCount=0;
+      if(k.goodActionCounter===undefined) k.goodActionCounter=0;
+      if(k.allActionCounter===undefined) k.allActionCounter=0;
+      if(!k.homework) k.homework={};
+      if(k.noDefectStreak===undefined) k.noDefectStreak=0;
+      if(k.streakBonusAvailable===undefined) k.streakBonusAvailable=false;
+      if(!k.gachaLog) k.gachaLog=[];
+      if(!k.customSpecial) k.customSpecial=[];
+      if(!k.hiddenDefault) k.hiddenDefault=[];
+      if(!k.hiddenPenalty) k.hiddenPenalty=[];
+      if(k.difficulty>4) k.difficulty=4;
+    });
+    document.getElementById('setupScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+    renderAll();
+  }
+})();
+</script>
+</body>
+</html>
